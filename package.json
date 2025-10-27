@@ -1,29 +1,22 @@
 {
-  "name": "scp-spherex",
-  "displayName": "SphereScript for SphereServer-X",
-  "description": "Syntax highlighting for SphereServer-X script files (scp)",
-  "publisher": "sphereserver-uo",
-  "version": "1.0.2",
-  "license": "MIT",
-  "icon": "images/icon.png",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Sphereserver/vscode-scp-extension.git"
-  },
+  "name": "spherescript-linter",
+  "displayName": "Sphere Script Linter",
+  "description": "Analyseur statique pour les fichiers Sphere Script (.scp)",
+  "version": "0.0.1",
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Programming Languages"
+    "Linters"
   ],
+  "main": "./out/extension.js",
   "contributes": {
     "languages": [
       {
         "id": "scp",
         "aliases": [
-          "SphereScript",
-          "SphereScript-X",
-          "scp"
+          "Sphere Script",
+          "spherescript"
         ],
         "extensions": [
           ".scp"
@@ -35,12 +28,35 @@
       {
         "language": "scp",
         "scopeName": "source.scp",
-        "path": "./syntaxes/scp.tmLanguage.json"
+        "path": "./syntaxes/spherescript.tmLanguage.json"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "editor.action.formatDocument",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "editorTextFocus && editorLangId == 'scp'"
       }
     ]
   },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
   "devDependencies": {
-    "vscode-tmgrammar-test": "^0.1.1",
-    "@vscode/vsce": "^1.103.1"
+    "@types/vscode": "^1.80.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.2.5",
+    "eslint": "^8.41.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.3",
+    "@vscode/test-electron": "^2.3.2"
   }
 }
