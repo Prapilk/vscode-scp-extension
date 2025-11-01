@@ -1,0 +1,3035 @@
+Directory structure:
+└── sphereserver-source-x/
+    ├── .clangd
+    ├── .cmake-format
+    ├── .gersemirc
+    ├── cmake/
+    │   ├── CommonCompilerFlags.cmake
+    │   └── toolchains/
+    │       └── include/
+    │           └── spheresvr.vcxproj.user.in
+    ├── lib/
+    │   ├── .cmake-tidy
+    │   ├── _bin/
+    │   │   ├── x86/
+    │   │   │   └── mariadb/
+    │   │   │       └── version.txt
+    │   │   └── x86_64/
+    │   │       └── mariadb/
+    │   │           └── version.txt
+    │   ├── bcrypt/
+    │   │   ├── CMakeLists.txt
+    │   │   └── bcrypt/
+    │   │       └── crypt_blowfish.h
+    │   ├── cdrc/
+    │   │   ├── CMakeLists.txt
+    │   │   └── cdrc/
+    │   │       └── custom/
+    │   │           ├── rand.cpp
+    │   │           ├── rand.h
+    │   │           ├── threadid.cpp
+    │   │           └── threadid.h
+    │   ├── flat_containers/
+    │   │   ├── CMakeLists.txt
+    │   │   └── flat_containers/
+    │   │       └── impl/
+    │   │           └── container_traits.hpp
+    │   ├── mariadb_connector_c/
+    │   │   ├── CMakeLists.txt
+    │   │   └── mysql/
+    │   │       └── ma_server_error.h
+    │   ├── object_ptr/
+    │   │   └── CMakeLists.txt
+    │   ├── rand/
+    │   │   └── CMakeLists.txt
+    │   ├── regex/
+    │   │   └── CMakeLists.txt
+    │   ├── sqlite/
+    │   │   └── CMakeLists.txt
+    │   ├── twofish/
+    │   │   └── CMakeLists.txt
+    │   └── zlib/
+    │       └── zlib/
+    │           ├── gzclose.c
+    │           ├── inffast.h
+    │           └── LICENSE
+    ├── src/
+    │   ├── common/
+    │   │   ├── assertion.h
+    │   │   ├── CFloatMath.h
+    │   │   ├── CLanguageID.h
+    │   │   ├── crypto/
+    │   │   │   ├── CBCrypt.h
+    │   │   │   ├── CCryptoKeyCalc.h
+    │   │   │   ├── CCryptoMD5Interface.cpp
+    │   │   │   ├── CHuffman.h
+    │   │   │   └── CMD5.h
+    │   │   ├── resource/
+    │   │   │   └── sections/
+    │   │   │       ├── CItemTypeDef.h
+    │   │   │       ├── CResourceNamedDef.cpp
+    │   │   │       └── CResourceNamedDef.h
+    │   │   ├── sphere_library/
+    │   │   │   └── stypecast.cpp
+    │   │   └── version/
+    │   │       └── GitRevision.h.in
+    │   ├── game/
+    │   │   ├── CComponent.cpp
+    │   │   ├── CSectorEnviron.cpp
+    │   │   ├── CSectorEnviron.h
+    │   │   ├── CStartLoc.h
+    │   │   ├── CTeleport.cpp
+    │   │   ├── CTeleport.h
+    │   │   ├── CWorldCache.h
+    │   │   ├── CWorldComm.h
+    │   │   ├── CWorldGameTime.h
+    │   │   ├── CWorldTimedFunctions.h
+    │   │   ├── triggers.h
+    │   │   ├── clients/
+    │   │   │   ├── CClientTooltip.cpp
+    │   │   │   ├── CClientTooltip.h
+    │   │   │   ├── CGlobalChatChanMember.cpp
+    │   │   │   └── CGlobalChatChanMember.h
+    │   │   ├── items/
+    │   │   │   ├── CItemCorpse.h
+    │   │   │   └── CItemMemory.h
+    │   │   └── uo_files/
+    │   │       ├── CUOHuesRec.cpp
+    │   │       ├── CUOHuesRec.h
+    │   │       ├── CUOIndexRec.cpp
+    │   │       ├── CUOItemInfo.h
+    │   │       ├── CUOMapBlock.h
+    │   │       ├── CUOMapMeter.cpp
+    │   │       ├── CUOMapMeter.h
+    │   │       ├── CUOMobtypes.h
+    │   │       ├── CUOMultiItemRec.cpp
+    │   │       ├── CUOStaticItemRec.cpp
+    │   │       ├── CUOTerrainInfo.cpp
+    │   │       ├── CUOTerrainInfo.h
+    │   │       ├── CUOTiledata.h
+    │   │       ├── CUOVersionBlock.cpp
+    │   │       └── uofiles_types.h
+    │   ├── network/
+    │   │   ├── CClientIterator.h
+    │   │   └── PingServer.h
+    │   ├── sphere/
+    │   │   ├── asyncdb.h
+    │   │   └── ProfileTask.h
+    │   └── tables/
+    │       ├── CBaseBaseDef_props.tbl
+    │       ├── CCharNpc_props.tbl
+    │       ├── CCharPlayer_functions.tbl
+    │       ├── CClient_props.tbl
+    │       ├── CCPropsItem_props.tbl
+    │       ├── CCPropsItemChar_props.tbl
+    │       ├── CCPropsItemWeapon_props.tbl
+    │       ├── CCPropsItemWeaponRanged_props.tbl
+    │       ├── CItem_functions.tbl
+    │       ├── CItemStone_functions.tbl
+    │       ├── CItemStone_props.tbl
+    │       ├── CParty_functions.tbl
+    │       ├── CParty_props.tbl
+    │       ├── CSector_functions.tbl
+    │       ├── CSFileObj_functions.tbl
+    │       ├── CSFileObj_props.tbl
+    │       ├── CSFileObjContainer_functions.tbl
+    │       ├── CSFileObjContainer_props.tbl
+    │       ├── CStoneMember_functions.tbl
+    │       └── CStoneMember_props.tbl
+    ├── tests/
+    │   └── coverity_model.cpp
+    ├── utilities/
+    │   ├── configure_asan.bat
+    │   └── configure_asan.sh
+    └── .github/
+        ├── codeql/
+        │   └── codeql-config.yml
+        └── workflows/
+            └── build_aux_files.yml
+
+================================================
+FILE: .clangd
+================================================
+CompileFlags:
+  Add:
+    # Exclude the following folders from the source code analysis.
+    - -I!.codelite
+    - -I!.ctagsd
+    - -I!.git
+    - -I!.github
+    - -I!.kdev4
+    - -I!.vscode
+    - -I!build
+    - -I!cmake
+    - -I!lib
+    - -I!utilities
+
+#  If:
+#    PathMatch: '.*/src/common/common\.h'
+#    Diagnostics:
+#      Suppress: ['-Wunused-include-directive']
+
+# TODO: disable clazy-non-pod-global-static
+
+
+
+================================================
+FILE: .cmake-format
+================================================
+# https://cmake-format.readthedocs.io/en/latest/
+#https://github.com/bouncmpe/cpp-project-template/blob/main/.cmake-format
+format:
+  line_width: 80
+  tab_size: 2
+  max_subgroups_hwrap: 2
+  max_pargs_hwrap: 6
+  max_rows_cmdline: 2
+  dangle_parens: true
+  dangle_align: 'prefix'
+  min_prefix_chars: 8
+  max_prefix_chars: 8
+  max_lines_hwrap: 2
+  command_case: 'lower'
+markup:
+  enable_markup: false
+
+
+
+================================================
+FILE: .gersemirc
+================================================
+# yaml-language-server: $schema=https://raw.githubusercontent.com/BlankSpruce/gersemi/master/gersemi/configuration.schema.json
+
+cache: false
+color: false
+definitions: []
+indent: 4
+line_length: 120
+list_expansion: favour-inlining
+quiet: false
+unsafe: false
+warn_about_unknown_commands: false
+workers: 4
+
+
+
+================================================
+FILE: cmake/CommonCompilerFlags.cmake
+================================================
+set(list_explicit_compiler_options_all CACHE INTERNAL STRING)
+set(list_explicit_linker_options_all   CACHE INTERNAL STRING)
+include("${CMAKE_SOURCE_DIR}/cmake/CompilerFlagsBase.cmake")
+include("${CMAKE_SOURCE_DIR}/cmake/CompilerFlagsChecker.cmake")
+
+# --------------------
+
+if(USE_ASAN)
+    set(PREPROCESSOR_DEFS_EXTRA ${PREPROCESSOR_DEFS_EXTRA} ADDRESS_SANITIZER)
+endif()
+if(USE_UBSAN)
+    set(PREPROCESSOR_DEFS_EXTRA ${PREPROCESSOR_DEFS_EXTRA} UNDEFINED_BEHAVIOR_SANITIZER)
+endif()
+if(USE_LSAN)
+    set(PREPROCESSOR_DEFS_EXTRA ${PREPROCESSOR_DEFS_EXTRA} LEAK_SANITIZER)
+endif()
+if(USE_MSAN)
+    set(PREPROCESSOR_DEFS_EXTRA ${PREPROCESSOR_DEFS_EXTRA} MEMORY_SANITIZER)
+endif()
+if(ENABLED_SANITIZER)
+    set(PREPROCESSOR_DEFS_EXTRA ${PREPROCESSOR_DEFS_EXTRA} _SANITIZERS)
+endif()
+
+
+
+================================================
+FILE: cmake/toolchains/include/spheresvr.vcxproj.user.in
+================================================
+<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">	
+	<PropertyGroup>
+		<!-- Exclude static code analysis for 3rd party code -->
+		<CAExcludePath>lib/flat_containers/flat_containers/;lib/libev/libev/;lib/mariadb/mariadb/;lib/object_ptr/object_ptr/;lib/parallel_hashmap/parallel_hashmap/;lib/sqlite/sqlite/;lib/regex/regex/;lib/zlib/zlib/;$(CAExcludePath)</CAExcludePath>
+
+		<!-- Set the working directory for the execution of the application with the debugger -->
+		<LocalDebuggerWorkingDirectory>@OUTDIR@$(Configuration)/</LocalDebuggerWorkingDirectory>
+		<DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+	</PropertyGroup>
+</Project>
+
+
+
+================================================
+FILE: lib/.cmake-tidy
+================================================
+# Disable all checks in this folder.
+Checks: -*
+
+
+
+================================================
+FILE: lib/_bin/x86/mariadb/version.txt
+================================================
+from mariadb client v10.6.5 package
+https://mariadb.com/kb/en/mariadb-server-10-6-5/
+
+
+================================================
+FILE: lib/_bin/x86_64/mariadb/version.txt
+================================================
+from mariadb client v10.11.2 package (x86_64 official builds only)
+https://mariadb.com/downloads/
+
+
+================================================
+FILE: lib/bcrypt/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(bcrypt C)
+
+set(lib_SOURCES
+    bcrypt/crypt_blowfish.c
+    bcrypt/crypt_blowfish.h
+    bcrypt/crypt_gensalt.c
+    bcrypt/crypt_gensalt.h
+    bcrypt/ow-crypt.h
+    bcrypt/wrapper.c
+)
+
+add_library(bcrypt STATIC ${lib_SOURCES})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(bcrypt PUBLIC .)
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\bcrypt FILES ${lib_SOURCES})
+
+# set compiler flags
+include("../lib_build_flags_common_c.cmake")
+target_compile_options(bcrypt PRIVATE ${c_compiler_options_common})
+target_compile_definitions(bcrypt PRIVATE ${c_compiler_definitions_common})
+target_link_options(bcrypt PRIVATE ${c_linker_options_common})
+
+
+
+================================================
+FILE: lib/bcrypt/bcrypt/crypt_blowfish.h
+================================================
+/*
+ * Written by Solar Designer <solar at openwall.com> in 2000-2011.
+ * No copyright is claimed, and the software is hereby placed in the public
+ * domain.  In case this attempt to disclaim copyright and place the software
+ * in the public domain is deemed null and void, then the software is
+ * Copyright (c) 2000-2011 Solar Designer and it is hereby released to the
+ * general public under the following terms:
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted.
+ *
+ * There's ABSOLUTELY NO WARRANTY, express or implied.
+ *
+ * See crypt_blowfish.c for more information.
+ */
+
+#ifndef _CRYPT_BLOWFISH_H
+#define _CRYPT_BLOWFISH_H
+
+extern int _crypt_output_magic(const char *setting, char *output, int size);
+extern char *_crypt_blowfish_rn(const char *key, const char *setting,
+	char *output, int size);
+extern char *_crypt_gensalt_blowfish_rn(const char *prefix,
+	unsigned long count,
+	const char *input, int size, char *output, int output_size);
+
+#endif
+
+
+
+================================================
+FILE: lib/cdrc/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(cdrc CXX)
+
+set(lib_SOURCES
+    cdrc/atomic_rc_ptr.h
+    cdrc/atomic_weak_ptr.h
+    cdrc/marked_arc_ptr.h
+    cdrc/rc_ptr.h
+    cdrc/snapshot_ptr.h
+    cdrc/weak_ptr.h
+    cdrc/weak_snapshot_ptr.h
+)
+set(lib_custom_SOURCES cdrc/custom/rand.cpp cdrc/custom/rand.h cdrc/custom/threadid.cpp cdrc/custom/threadid.h)
+
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\cdrc FILES ${lib_SOURCES})
+source_group(lib\\cdrc\\custom FILES ${lib_custom_SOURCES})
+
+add_library(cdrc STATIC ${lib_SOURCES} ${lib_custom_SOURCES})
+
+# set compiler flags
+if(MSVC)
+    set(my_comp_options /wd4244 /wd4267 /wd4324)
+endif()
+
+include("../lib_build_flags_common_c.cmake")
+target_compile_options(cdrc PRIVATE ${c_compiler_options_common} ${my_comp_options})
+target_link_options(cdrc PRIVATE ${c_linker_options_common})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(cdrc PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+
+================================================
+FILE: lib/cdrc/cdrc/custom/rand.cpp
+================================================
+namespace cdrc::utils::rand {
+
+  thread_local static unsigned long x=123456789, y=362436069, z=521288629;
+
+  void init(int seed) {
+    x += seed;
+  }
+
+  unsigned long get_rand() {          //period 2^96-1
+    unsigned long t;
+    x ^= x << 16;
+    x ^= x >> 5;
+    x ^= x << 1;
+
+    t = x;
+    x = y;
+    y = z;
+    z = t ^ x ^ y;
+
+    return z;
+  }
+
+}  // namespace
+
+
+
+================================================
+FILE: lib/cdrc/cdrc/custom/rand.h
+================================================
+#ifndef _INC_CDRC_RAND_H
+#define _INC_CDRC_RAND_H
+
+namespace cdrc
+{
+namespace utils
+{
+namespace rand
+{
+
+void init(int seed);
+unsigned long get_rand();
+
+}  // namespace
+}
+}
+
+#endif // _INC_CDRC_RAND_H
+
+
+
+================================================
+FILE: lib/cdrc/cdrc/custom/threadid.cpp
+================================================
+#include "threadid.h"
+#include "../internal/utils.h"
+#include <cassert>
+
+namespace cdrc
+{
+namespace utils
+{
+
+size_t num_threads() {
+    static size_t n_threads = []() -> size_t {
+        //if (const auto env_p = std::getenv("NUM_THREADS")) {
+        //    return std::stoi(env_p) + 1;
+        //}
+        //else {
+            return std::thread::hardware_concurrency() + 1;
+        //}
+        }();
+    return n_threads;
+}
+
+ThreadID::ThreadID() {
+    for (size_t i = 0; i < num_threads(); i++) {
+        bool expected = false;
+        if (!in_use[i] && in_use[i].compare_exchange_strong(expected, true)) {
+            tid = i;
+            return;
+        }
+    }
+    //std::cerr << "Error: more than " << num_threads() << " threads created" << std::endl;
+    //std::exit(1);
+    assert(false);
+}
+
+thread_local ThreadID threadID;
+std::vector<std::atomic<bool>> ThreadID::in_use(num_threads());
+
+}
+} // namespace
+
+
+
+================================================
+FILE: lib/cdrc/cdrc/custom/threadid.h
+================================================
+#ifndef _INC_CDRC_THREADID_H
+#define _INC_CDRC_THREADID_H
+
+#include <atomic>
+#include <string>
+#include <thread>
+#include <vector>
+
+namespace cdrc
+{
+namespace utils
+{
+
+size_t num_threads();
+
+struct ThreadID {
+    static std::vector<std::atomic<bool>> in_use; // initialize to false
+    int tid;
+
+    ThreadID();
+    ~ThreadID() {
+        in_use[tid] = false;
+    }
+
+    int getTID() const { return tid; }
+};
+
+extern thread_local ThreadID threadID;
+
+}
+} // namespace
+
+#endif // _INC_THREADID_H
+
+
+
+================================================
+FILE: lib/flat_containers/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(flat_containers CXX)
+
+set(lib_SOURCES
+    flat_containers/flat_map.hpp
+    flat_containers/flat_multimap.hpp
+    flat_containers/flat_multiset.hpp
+    flat_containers/flat_set.hpp
+)
+
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\flat_containers FILES ${lib_SOURCES})
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(flat_containers INTERFACE ${lib_SOURCES})
+#set_target_properties(flat_containers PROPERTIES LINKER_LANGUAGE CXX)
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(flat_containers INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+
+================================================
+FILE: lib/flat_containers/flat_containers/impl/container_traits.hpp
+================================================
+// Copyright Pubby 2016
+// Distributed under the Boost Software License, Version 1.0.
+// http://www.boost.org/LICENSE_1_0.txt
+
+using container_type = Container;
+using key_type = Key;
+using size_type = typename container_type::size_type;
+using difference_type = typename container_type::difference_type;
+using value_type = typename container_type::value_type;
+using iterator
+    = impl::flat_iterator<
+        typename container_type::iterator,
+        impl::dummy_iterator<typename container_type::iterator>>;
+using const_iterator
+    = impl::flat_iterator<
+        typename container_type::const_iterator,
+        iterator>;
+using reverse_iterator
+    = impl::flat_iterator<
+        typename container_type::reverse_iterator,
+        impl::dummy_iterator<typename container_type::reverse_iterator>>;
+using const_reverse_iterator
+    = impl::flat_iterator<
+        typename container_type::const_reverse_iterator,
+        reverse_iterator>;
+
+
+
+================================================
+FILE: lib/mariadb_connector_c/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(mariadb_connector C)
+# we do not build the library here, only provide the headers for a precompiled one.
+#include("lib_compiler_flags_common_c.cmake")
+
+# Configure MariaDB C Connector source headers
+include("mysql/configure.cmake")
+
+set(lib_SOURCES mysql/config.h mysql/mysql.h)
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(mariadb_connector INTERFACE ${lib_SOURCES})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(mariadb_connector INTERFACE .)
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\mariadb_connector_c FILES ${lib_SOURCES})
+
+
+
+================================================
+FILE: lib/mariadb_connector_c/mysql/ma_server_error.h
+================================================
+/* This file exists for compatibility only */
+#include "mysqld_error.h"
+
+
+
+================================================
+FILE: lib/object_ptr/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(object_ptr CXX)
+
+# provide the headers headers.
+set(lib_SOURCES object_ptr/object_ptr.hpp)
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(object_ptr INTERFACE ${lib_SOURCES})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(object_ptr INTERFACE .)
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\object_ptr FILES ${lib_SOURCES})
+
+
+
+================================================
+FILE: lib/rand/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(rand CXX)
+
+set(lib_SOURCES rand/xorshift.hpp)
+
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\rand FILES ${lib_SOURCES})
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(rand INTERFACE ${lib_SOURCES})
+#set_target_properties(rand PROPERTIES LINKER_LANGUAGE CXX)
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(rand INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+
+================================================
+FILE: lib/regex/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(regex CXX)
+
+set(lib_SOURCES regex/deelx.h)
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(regex INTERFACE ${lib_SOURCES})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(regex INTERFACE .)
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\regex FILES ${lib_SOURCES})
+
+
+
+================================================
+FILE: lib/sqlite/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(sqlite C)
+
+set(lib_SOURCES sqlite/sqlite3.c sqlite/sqlite3.h)
+
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\sqlite FILES ${lib_SOURCES})
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(sqlite STATIC ${lib_SOURCES})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(sqlite PUBLIC .)
+
+# set compiler flags
+include("../lib_build_flags_common_c.cmake")
+target_compile_options(sqlite PRIVATE ${c_compiler_options_common})
+target_compile_definitions(sqlite PRIVATE ${c_compiler_definitions_common})
+target_link_options(sqlite PRIVATE ${c_linker_options_common})
+
+
+
+================================================
+FILE: lib/twofish/CMakeLists.txt
+================================================
+cmake_minimum_required(VERSION 3.19)
+project(twofish C)
+
+set(lib_SOURCES twofish/twofish.h twofish/twofish_aux.h twofish/twofish.c)
+
+# add to the proper directories in the solution explorer (eg. Visual Studio)
+source_group(lib\\twofish FILES ${lib_SOURCES})
+
+# create the target. equivalent to add_executable, but for libraries
+add_library(twofish STATIC ${lib_SOURCES})
+
+# make the headers available in the include path (accessible with < >).
+target_include_directories(twofish PUBLIC .)
+
+# set compiler flags
+include("../lib_build_flags_common_c.cmake")
+target_compile_options(twofish PRIVATE ${c_compiler_options_common})
+target_compile_definitions(twofish PRIVATE ${c_compiler_definitions_common})
+target_link_options(twofish PRIVATE ${c_linker_options_common})
+
+
+
+================================================
+FILE: lib/zlib/zlib/gzclose.c
+================================================
+/* gzclose.c -- zlib gzclose() function
+ * Copyright (C) 2004, 2010 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */
+
+#include "gzguts.h"
+
+/* gzclose() is in a separate file so that it is linked in only if it is used.
+   That way the other gzclose functions can be used instead to avoid linking in
+   unneeded compression or decompression routines. */
+int ZEXPORT gzclose(gzFile file) {
+#ifndef NO_GZCOMPRESS
+    gz_statep state;
+
+    if (file == NULL)
+        return Z_STREAM_ERROR;
+    state = (gz_statep)file;
+
+    return state->mode == GZ_READ ? gzclose_r(file) : gzclose_w(file);
+#else
+    return gzclose_r(file);
+#endif
+}
+
+
+
+================================================
+FILE: lib/zlib/zlib/inffast.h
+================================================
+/* inffast.h -- header to use inffast.c
+ * Copyright (C) 1995-2003, 2010 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */
+
+/* WARNING: this file should *not* be used by applications. It is
+   part of the implementation of the compression library and is
+   subject to change. Applications should only use zlib.h.
+ */
+
+void ZLIB_INTERNAL inflate_fast(z_streamp strm, unsigned start);
+
+
+
+================================================
+FILE: lib/zlib/zlib/LICENSE
+================================================
+Copyright notice:
+
+ (C) 1995-2022 Jean-loup Gailly and Mark Adler
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Jean-loup Gailly        Mark Adler
+  jloup@gzip.org          madler@alumni.caltech.edu
+
+
+
+================================================
+FILE: src/common/assertion.h
+================================================
+#ifndef _INC_ASSERTION_H
+#define _INC_ASSERTION_H
+
+#ifndef STATIC_ANALYSIS_
+    #if defined(__COVERITY__)
+        #define STATIC_ANALYSIS_
+    #endif
+#endif
+
+[[noreturn]]
+extern void Assert_Fail(const char * pExp, const char *pFile, long long llLine);
+
+#define ASSERT_ALWAYS(exp)  if ( !(exp) ) [[unlikely]] Assert_Fail(#exp, __FILE__, __LINE__)
+
+#if defined(STATIC_ANALYSIS)
+    #include <cassert>
+    #define ASSERT(exp)         assert(exp)
+#elif defined(_NIGHTLYBUILD) || defined(_DEBUG)
+    #define ASSERT(exp)         if ( !(exp) ) [[unlikely]] Assert_Fail(#exp, __FILE__, __LINE__)
+#else
+    #define ASSERT(exp)         (void)0
+#endif
+
+#if defined(_DEBUG) || defined(STATIC_ANALYSIS)
+    #define DEBUG_ASSERT(exp)   if ( !(exp) ) [[unlikely]] Assert_Fail(#exp, __FILE__, __LINE__)
+#else
+    #define DEBUG_ASSERT(exp)   (void)0
+#endif
+
+
+#undef STATIC_ANALYSIS_
+#endif // ! _INC_ASSERTION_H
+
+
+
+
+================================================
+FILE: src/common/CFloatMath.h
+================================================
+/**
+* @file CFloatMath.h
+* @brief Custom float implementation.
+*/
+
+#ifndef _INC_CFLOATMATH_H
+#define _INC_CFLOATMATH_H
+
+#include "sphere_library/CSString.h"
+
+
+struct CFloatMath
+{
+	// Expression Parsing
+	static CSString FloatMath( lpctstr & Expr );
+
+private:
+	static realtype MakeFloatMath( lpctstr & Expr );
+	static realtype GetRandVal( realtype dQty );
+	static realtype GetRandVal2( realtype dMin, realtype dMax );
+	//Does not work as it should, would be too slow, and nobody needs that
+	/*static realtype GetRangeNumber( lpctstr & pExpr );
+	static int GetRangeVals( lpctstr & pExpr, realtype * piVals, short int iMaxQty );*/
+
+	static realtype GetValMath( realtype dVal, lpctstr & pExpr );
+	static realtype GetSingle( lpctstr & pArgs );
+};
+
+#endif // _INC_CFLOATMATH_H
+
+
+================================================
+FILE: src/common/CLanguageID.h
+================================================
+#ifndef _INC_CLANGUAAGEID_H
+#define _INC_CLANGUAAGEID_H
+
+#include "common.h"
+
+class CLanguageID
+{
+    // 3 letter code for language.
+    // ENU,FRA,DEU,etc. (see langcode.iff)
+    // terminate with a 0
+    // 0 = english default.
+    char m_codes[4]; // UNICODE language pref. ('ENU'=english)
+
+public:
+    CLanguageID() noexcept;
+    CLanguageID( const char * pszInit ) noexcept;
+    CLanguageID(int iDefault) noexcept;
+
+    bool IsDef() const noexcept;
+    void GetStrDef(tchar* pszLang) noexcept;
+    void GetStr(tchar* pszLang) const noexcept;
+    lpctstr GetStr() const;
+    bool Set(lpctstr pszLang) noexcept;
+};
+
+#endif
+
+
+
+================================================
+FILE: src/common/crypto/CBCrypt.h
+================================================
+#ifndef _INC_CBCRYPT_H
+#define _INC_CBCRYPT_H
+
+#include "../sphere_library/CSString.h"
+
+struct CBCrypt
+{
+    static CSString HashBCrypt(const char* password, int iPrefixCode = 2, int iCost = 4);
+    static bool ValidateBCrypt(const char* password, const char* hash);
+};
+
+#endif	// _INC_CBCRYPT_H
+
+
+
+================================================
+FILE: src/common/crypto/CCryptoKeyCalc.h
+================================================
+/*
+* @file CCryptoKeyCalc.h
+* @brief Calculate client cryptographic keys.
+*/
+
+#ifndef _INC_CCRYPTOKEYCALC_H
+#define _INC_CCRYPTOKEYCALC_H
+
+#include "../CUOClientVersion.h"
+#include "../sphereproto.h"
+#include "crypto_common.h"
+#include <string>
+
+
+struct CCryptoKeyCalc
+{
+    static CCryptoClientKey CalculateLoginKeysReportedVer(CUOClientVersion ver, ENCRYPTION_TYPE forceCryptType = ENC_NONE) noexcept;
+    static CCryptoClientKey CalculateLoginKeys(CUOClientVersion ver, GAMECLIENT_TYPE cliType, ENCRYPTION_TYPE forceCryptType = ENC_NONE) noexcept;
+    static std::string FormattedLoginKey(CUOClientVersion ver, GAMECLIENT_TYPE cliType, CCryptoClientKey cryptoKey);
+};
+
+#endif // _INC_CCRYPTOKEYCALC_H
+
+
+
+================================================
+FILE: src/common/crypto/CCryptoMD5Interface.cpp
+================================================
+#include "../../sphere/threads.h"
+#include "CCrypto.h"
+#include "CMD5.h"
+
+
+void CCrypto::InitMD5(byte * ucInitialize)
+{
+	ADDTOCALLSTACK("CCrypto::InitMD5");
+	m_md5_position = 0;
+
+	m_md5_engine->update( ucInitialize, TFISH_RESET );
+	m_md5_engine->finalize();
+	m_md5_engine->numericDigest( &m_md5_digest[0] );
+}
+
+bool CCrypto::EncryptMD5( byte * pOutput, const byte * pInput, size_t outLen, size_t inLen )
+{
+	ADDTOCALLSTACK("CCrypto::EncryptMD5");
+
+	for (size_t i = 0; i < inLen; ++i)
+	{
+        if (i >= outLen)
+            return false; // error: i'm trying to write more bytes than the output buffer length
+		pOutput[i] = pInput[i] ^ m_md5_digest[m_md5_position++];
+		m_md5_position &= MD5_RESET;
+	}
+    return true;
+}
+
+
+
+================================================
+FILE: src/common/crypto/CHuffman.h
+================================================
+// Huffman Compression Class
+
+#include "../common.h"
+
+class CHuffman
+{
+public:
+    static const char* m_sClassName;
+    CHuffman() noexcept = default;
+    CHuffman(const CHuffman& copy) = delete;
+    CHuffman& operator=(const CHuffman& other) = delete;
+
+    static uint Compress(byte* pOutput, const byte* pInput, uint outLen, uint inLen);
+};
+
+
+
+================================================
+FILE: src/common/crypto/CMD5.h
+================================================
+ /**
+ * @file CUID.h
+ * @brief MD5 hashing.
+ */
+
+ /*
+ This code has been built from scratch using rfc1321 and Colin Plumb's
+ public domain code.
+ */
+
+#ifndef _INC_CMD5_H 
+#define _INC_CMD5_H
+
+#include "../datatypes.h"
+
+class CMD5
+{
+private:
+	uint m_buffer[4];
+	uint m_bits[2];
+	uchar m_input[64];
+	bool m_finalized;
+
+	void private_update() noexcept;
+
+public:
+	CMD5() noexcept;
+    ~CMD5() noexcept = default;
+    CMD5(const CMD5& copy) = delete;
+    CMD5& operator=(const CMD5& other) = delete;
+
+	void reset() noexcept;
+	void update( const uchar * data, uint length ) noexcept;
+	void finalize() noexcept;
+
+	// Digest has to be 33 bytes long
+	void digest( char * digest ) noexcept;
+	// Get digest in a "numeric" form to be usable
+	void numericDigest( uchar * digest ) noexcept;
+	
+    static void fastDigest(char * digest, const char * message) noexcept;
+};
+
+#endif // _INC_CMD5_H
+
+
+
+================================================
+FILE: src/common/resource/sections/CItemTypeDef.h
+================================================
+/**
+* @file CItemTypeDef.h
+*
+*/
+
+#ifndef _INC_CITEMTYPEDEF_H
+#define _INC_CITEMTYPEDEF_H
+
+#include "../CResourceLink.h"
+
+
+class CItemTypeDef : public CResourceLink
+{
+public:
+    static const char *m_sClassName;
+    explicit CItemTypeDef( CResourceID rid ) : CResourceLink( rid )
+    {
+    }
+
+    //CItemTypeDef(CItemTypeDef&&) = default;
+    CItemTypeDef(const CItemTypeDef& copy) = delete;
+    CItemTypeDef& operator=(const CItemTypeDef& other) = delete;
+
+public:
+    virtual bool r_LoadVal( CScript & s ) override;
+    int GetItemType() const;
+};
+
+#endif // _INC_CITEMTYPEDEF_H
+
+
+
+================================================
+FILE: src/common/resource/sections/CResourceNamedDef.cpp
+================================================
+#include "CResourceNamedDef.h"
+
+CResourceNamedDef::CResourceNamedDef(const CResourceID& rid, lpctstr pszName) :
+    CResourceLink(rid), m_sName(pszName)
+{
+}
+
+lpctstr CResourceNamedDef::GetName() const
+{
+    return m_sName.GetBuffer();
+}
+
+
+
+================================================
+FILE: src/common/resource/sections/CResourceNamedDef.h
+================================================
+#ifndef _INC_CRESOURCENAMEDDEF_H
+#define _INC_CRESOURCENAMEDDEF_H
+
+
+#include "../../sphere_library/CSString.h"
+#include "../CResourceLink.h"
+
+class CResourceNamedDef : public CResourceLink
+{
+    // Private name pool. (does not use DEFNAME) RES_FUNCTION
+public:
+    static const char* m_sClassName;
+private:
+    const CSString m_sName;
+
+public:
+    CResourceNamedDef(const CResourceID& rid, lpctstr pszName);
+    virtual ~CResourceNamedDef() = default;
+
+    CResourceNamedDef(const CResourceNamedDef& copy) = delete;
+    CResourceNamedDef& operator=(const CResourceNamedDef& other) = delete;
+
+public:
+    virtual lpctstr GetName() const override;
+
+};
+
+
+#endif //_INC_CRESOURCENAMEDDEF_H
+
+
+
+================================================
+FILE: src/common/sphere_library/stypecast.cpp
+================================================
+#include "../CLog.h"
+#include "stypecast.h"
+
+namespace detail_stypecast {
+
+void LogEventWarnWrapper(const char* warn_str)
+{
+    g_Log.EventWarn(warn_str);
+}
+
+}
+
+
+
+================================================
+FILE: src/common/version/GitRevision.h.in
+================================================
+#ifndef _INC_GITREVISION_H
+#define _INC_GITREVISION_H
+
+#define __GITHASH__ "@GITHASH_VAL@"
+#define __GITREVISION__ @GITREV_VAL@
+#define __GITBRANCH__ "@GITBRANCH_VAL@"
+
+#endif // _INC_GITREVISION_H
+
+
+
+================================================
+FILE: src/game/CComponent.cpp
+================================================
+
+#include "CComponent.h"
+
+CComponent::CComponent(COMP_TYPE type) noexcept :
+    _iType(type)
+{
+}
+
+CComponent::~CComponent() = default;
+
+COMP_TYPE CComponent::GetType() const noexcept
+{
+    return _iType;
+}
+
+
+
+
+================================================
+FILE: src/game/CSectorEnviron.cpp
+================================================
+#include "uo_files/uofiles_macros.h"
+#include "CSectorEnviron.h"
+
+
+CSectorEnviron::CSectorEnviron() noexcept
+{
+    m_Light = LIGHT_BRIGHT;	// set based on time later.
+    m_Season = SEASON_Summer;
+    m_Weather = WEATHER_DRY;
+}
+
+void CSectorEnviron::SetInvalid() noexcept
+{
+    // Force a resync of all this. we changed location by teleport etc.
+    m_Light = UINT8_MAX;	// set based on time later.
+    m_Season = SEASON_QTY;
+    m_Weather = WEATHER_DEFAULT;
+}
+
+
+
+================================================
+FILE: src/game/CSectorEnviron.h
+================================================
+/**
+* @file CSectorEnviron.h
+*
+*/
+
+#ifndef _INC_CSECTORENVIRON_H
+#define _INC_CSECTORENVIRON_H
+
+#include "../common/sphereproto.h"
+
+
+struct CSectorEnviron	// When these change it is an CTRIG_EnvironChange,
+{
+#define LIGHT_OVERRIDE 0x80		// are we overriding the sector's light? (character LIGHT property doesn't count as overriding the sector's light)
+
+    byte m_Light;		        // the calculated light level in this area. |0x80 = override.
+    SEASON_TYPE m_Season;		// What is the season for this sector.
+    WEATHER_TYPE m_Weather;		// the weather in this area now.
+
+    CSectorEnviron() noexcept;
+    void SetInvalid() noexcept;
+};
+
+
+#endif // _INC_CSECTORENVIRON_H
+
+
+
+================================================
+FILE: src/game/CStartLoc.h
+================================================
+#ifndef _INC_CSTARTLOC_H
+#define _INC_CSTARTLOC_H
+
+#include "../common/sphere_library/CSString.h"
+#include "../common/CPointBase.h"
+
+
+class CStartLoc		// The start locations for creating a new char.
+{
+public:
+	static const char* m_sClassName;
+
+	CSString m_sArea;	// Area/City Name = Britain or Occlo
+	CSString m_sName;	// Place name = Castle Britannia or Docks
+	CPointMap m_pt;
+	int iClilocDescription; //Only for clients 7.00.13 +
+
+	explicit CStartLoc(lpctstr pszArea) noexcept :
+		m_sArea(pszArea), iClilocDescription(1149559)
+	{}
+	~CStartLoc() noexcept = default;
+	
+	CStartLoc(const CStartLoc& copy) = delete;
+	CStartLoc& operator=(const CStartLoc& other) = delete;
+};
+
+
+#endif // _INC_CSTARTLOC_H
+
+
+
+================================================
+FILE: src/game/CTeleport.cpp
+================================================
+#include "../common/CLog.h"
+#include "../sphere/threads.h"
+#include "CSector.h"
+#include "CTeleport.h"
+
+
+//************************************************************************
+// -CTeleport
+
+CTeleport::CTeleport(tchar* pszArgs)
+{
+	// RES_TELEPORT
+	// Assume valid iArgs >= 5
+
+	tchar* ppCmds[4];
+	size_t iArgs = Str_ParseCmds(pszArgs, ppCmds, ARRAY_COUNT(ppCmds), "=");
+	if (iArgs < 2)
+	{
+		DEBUG_ERR(("Bad CTeleport Def\n"));
+		_fNpc = false;
+		return;
+	}
+	Read(ppCmds[0]);
+	_ptDst.Read(ppCmds[1]);
+	if (ppCmds[3])
+		_fNpc = (Str_ToI(ppCmds[3]) != 0);
+	else
+		_fNpc = false;
+}
+
+bool CTeleport::RealizeTeleport()
+{
+	ADDTOCALLSTACK("CTeleport::RealizeTeleport");
+	if (!IsCharValid() || !_ptDst.IsCharValid())
+	{
+		DEBUG_ERR(("CTeleport bad coords %s\n", WriteUsed()));
+		return false;
+	}
+	CSector* pSector = GetSector();
+	if (pSector)
+		return pSector->AddTeleport(this);
+	else
+		return false;
+}
+
+
+
+================================================
+FILE: src/game/CTeleport.h
+================================================
+#ifndef _INC_CTELEPORT_H
+#define _INC_CTELEPORT_H
+
+#include "../common/CPointBase.h"
+
+
+class CTeleport : public CPointSort	// The static world teleporters.
+{
+	// Put a built in trigger here ? can be Array sorted by CPointMap.
+public:
+	static const char* m_sClassName;
+
+	bool _fNpc;
+	CPointMap _ptDst;
+
+
+	explicit CTeleport(const CPointMap& pt) : CPointSort(pt)
+	{
+		ASSERT(pt.IsValidPoint());
+		_ptDst = pt;
+		_fNpc = false;
+	}
+	explicit CTeleport(tchar* pszArgs);
+	~CTeleport() noexcept = default;
+
+	CTeleport(const CTeleport& copy) = delete;
+	CTeleport& operator=(const CTeleport& other) = delete;
+
+
+	bool RealizeTeleport();
+};
+
+
+#endif // _INC_CTELEPORT_H
+
+
+================================================
+FILE: src/game/CWorldCache.h
+================================================
+/**
+* @file CWorldCache.h
+*/
+
+#ifndef _INC_CWORLDCACHE_H
+#define _INC_CWORLDCACHE_H
+
+#include "../common/CServerMap.h"
+
+class CWorldCache
+{
+	friend class CWorld;
+	friend class CWorldMap;
+
+	int64	_iTimeLastMapBlockCacheCheck;
+	
+	using MapBlockCacheCont = std::unique_ptr<CServerMapBlock>;     // Info about a single map block
+	using MapBlockCache = std::unique_ptr<MapBlockCacheCont[]>;     // An element per each map block
+	MapBlockCache _mapBlocks[MAP_SUPPORTED_QTY];                    // An element per each map
+
+public:
+	static const char* m_sClassName;
+	CWorldCache();
+	~CWorldCache() = default;
+
+	void Init();
+
+	void CheckMapBlockCache(int64 iCurTime, int64 iCacheTime);
+};
+
+#endif // _INC_CWORLDCACHE_H
+
+
+
+================================================
+FILE: src/game/CWorldComm.h
+================================================
+/**
+* @file CWorldComm.h
+*
+*/
+
+#ifndef _INC_CWORLDCOMM_H
+#define _INC_CWORLDCOMM_H
+
+#include "../common/common.h"
+#include "../common/CLanguageID.h"
+#include "../common/sphereproto.h"
+#include "uo_files/uofiles_enums.h"
+#include "uo_files/uofiles_types.h"
+
+class CObjBaseTemplate;
+
+
+class CWorldComm
+{
+public:
+	static const char* m_sClassName;
+
+	static void Speak(const CObjBaseTemplate* pSrc, lpctstr pText, HUE_TYPE wHue = HUE_TEXT_DEF, TALKMODE_TYPE mode = TALKMODE_SAY, FONT_TYPE font = FONT_BOLD);
+	static void SpeakUNICODE(const CObjBaseTemplate* pSrc, const nachar* pText, HUE_TYPE wHue, TALKMODE_TYPE mode, FONT_TYPE font, CLanguageID lang);
+
+	static void Broadcast(lpctstr pMsg);
+    static void Broadcastf(lpctstr pMsg, ...) SPHERE_PRINTFARGS(1, 2);
+};
+
+
+#endif // _INC_CWORLDCOMM_H
+
+
+
+================================================
+FILE: src/game/CWorldGameTime.h
+================================================
+/**
+* @file CWorldGameTime.h
+*
+*/
+
+#ifndef _INC_CWORLDGAMETIME_H
+#define _INC_CWORLDGAMETIME_H
+
+#include "CServerTime.h"
+
+
+class CWorldGameTime
+{
+public:
+	static const char* m_sClassName;
+
+	#undef GetCurrentTime
+	static const CServerTime& GetCurrentTime() noexcept;
+
+	static int64 GetCurrentTimeInGameMinutes(int64 basetime) noexcept;	// return game world minutes
+	static int64 GetCurrentTimeInGameMinutes() noexcept;
+	
+	static uint GetMoonPhase( bool fMoonIndex = false );
+	static int64 GetNextNewMoon( bool fMoonIndex );
+};
+
+
+#endif // _INC_CWORLDGAMETIME_H
+
+
+
+================================================
+FILE: src/game/CWorldTimedFunctions.h
+================================================
+/**
+* @file CWorldTimedFunctions.h
+*
+*/
+
+#ifndef _INC_CWORLDTIMEDFUNCTIONS_H
+#define _INC_CWORLDTIMEDFUNCTIONS_H
+
+#include "../common/CScriptContexts.h"
+#include "../common/CScriptObj.h"
+#include "../common/CUID.h"
+
+class CTimedFunction;
+class CScript;
+class CString;
+
+class CWorldTimedFunctions
+{
+public:
+    static int Load(lpctstr ptcKeyword, bool fQuoted, lpctstr ptcArg);
+    static void Add(const CUID& uid, int64 iTimeout, lpctstr ptcCommand);
+    static void ClearUID(const CUID& uid);
+    static void Stop(const CUID& uid, lpctstr ptcCommand);
+    static void Clear();
+    static TRIGRET_TYPE Loop(lpctstr ptcCommand, int LoopsMade, CScriptLineContext StartContext,
+        CScript &s, CTextConsole * pSrc, CScriptTriggerArgs * pArgs, CSString * pResult);
+    static int64 IsTimer(const CUID& uid, lpctstr funcname);
+};
+#endif // _INC_CWORLDTIMEDFUNCTIONS_H
+
+
+
+================================================
+FILE: src/game/triggers.h
+================================================
+/**
+* @file triggers.h
+*
+*/
+
+#ifndef _INC_TRIGGERS_H
+#define _INC_TRIGGERS_H
+
+
+//	Triggers list
+
+#define TRIGGER_NAME_MAX_LEN    48
+
+enum E_TRIGGERS
+{
+#define ADD(a) TRIGGER_##a,
+#include "../tables/triggers.tbl"
+    TRIGGER_QTY,
+};
+
+bool IsTrigUsed(E_TRIGGERS id);
+bool IsTrigUsed(const char *name);
+void TriglistInit();
+void TriglistClear();
+void TriglistAdd(E_TRIGGERS id);
+void TriglistAdd(const char *name);
+void Triglist(int &total, int &used);
+void TriglistPrint();
+
+
+#endif // _INC_TRIGGERS_H
+
+
+
+================================================
+FILE: src/game/clients/CClientTooltip.cpp
+================================================
+#include "../../common/sphere_library/sstring.h"
+#include "CClientTooltip.h"
+#include <cstdarg>
+
+CClientTooltip::CClientTooltip(dword dwClilocID)
+{
+    m_clilocid = dwClilocID;
+    m_args[0] = '\0';
+}
+
+CClientTooltip::CClientTooltip(dword dwClilocID, lpctstr ptcArgs)
+{
+    ASSERT(ptcArgs);
+    m_clilocid = dwClilocID;
+    Str_CopyLimitNull(m_args, ptcArgs, MAX_TOOLTIP_LEN);
+}
+
+CClientTooltip::CClientTooltip(dword dwClilocID, int64 iArgs)
+{
+    m_clilocid = dwClilocID;
+    snprintf(m_args, MAX_TOOLTIP_LEN - 1, "%" PRId64, iArgs);
+}
+
+void CClientTooltip::FormatArgs(lpctstr format, ...)
+{
+    va_list vargs;
+    va_start( vargs, format );
+
+    if ( ! vsnprintf( m_args, MAX_TOOLTIP_LEN - 1, format, vargs ) )
+        Str_CopyLimitNull( m_args, format, MAX_TOOLTIP_LEN );
+
+    va_end( vargs );
+}
+
+
+
+================================================
+FILE: src/game/clients/CClientTooltip.h
+================================================
+/**
+* @file CClientTooltip.h
+*
+*/
+
+#ifndef _INC_CCLIENTTOOLTIP_H
+#define _INC_CCLIENTTOOLTIP_H
+
+#include "../../common/common.h"
+
+
+#define MAX_TOOLTIP_LEN 256
+
+// Storage for Tooltip data while in trigger on an item
+class CClientTooltip
+{
+public:
+    static const char *m_sClassName;
+    dword m_clilocid;
+    tchar m_args[MAX_TOOLTIP_LEN];
+
+public:
+    CClientTooltip(dword dwClilocID);
+    CClientTooltip(dword dwClilocID, lpctstr ptcArgs);
+    CClientTooltip(dword dwClilocID, int64 iArgs);
+
+    CClientTooltip(const CClientTooltip& copy) = delete;
+    CClientTooltip& operator=(const CClientTooltip& other) = delete;
+
+public:
+    void FormatArgs(lpctstr format, ...) SPHERE_PRINTFARGS(2,3);
+};
+
+
+#endif // _INC_CCLIENTTOOLTIP_H
+
+
+
+================================================
+FILE: src/game/clients/CGlobalChatChanMember.cpp
+================================================
+
+#include "CGlobalChatChanMember.h"
+
+CGlobalChatChanMember::CGlobalChatChanMember() noexcept :
+    m_fVisible(false)
+{
+}
+
+CGlobalChatChanMember::~CGlobalChatChanMember() noexcept = default;
+
+void CGlobalChatChanMember::SetJID(lpctstr pszJID)
+{
+	m_strJID = pszJID;
+}
+
+lpctstr CGlobalChatChanMember::GetJID() const
+{
+	return m_strJID.GetBuffer();
+}
+
+void CGlobalChatChanMember::SetVisible(bool fNewStatus)
+{
+	m_fVisible = fNewStatus;
+}
+
+bool CGlobalChatChanMember::IsVisible() const
+{
+	return m_fVisible;
+}
+
+
+
+================================================
+FILE: src/game/clients/CGlobalChatChanMember.h
+================================================
+/**
+* @file CGlobalChatChanMember.h
+*
+*/
+
+#ifndef _INC_CGLOBALCHATCHANMEMBER_H
+#define _INC_CGLOBALCHATCHANMEMBER_H
+
+#include "../../common/sphere_library/CSString.h"
+
+class CClient;
+
+
+class CGlobalChatChanMember		// This is member of CClient
+{
+public:
+	static const char* m_sClassName;
+
+	CGlobalChatChanMember() noexcept;
+	virtual ~CGlobalChatChanMember() noexcept;
+
+private:
+	CSString m_strJID;	// client Jabber ID
+	bool m_fVisible;	// client visibility status (online/offline)
+
+public:
+	void SetJID(lpctstr pszJID);
+	lpctstr GetJID() const;
+	void SetVisible(bool fNewStatus);
+	bool IsVisible() const;
+
+	CGlobalChatChanMember(const CGlobalChatChanMember& copy) = delete;
+	CGlobalChatChanMember& operator=(const CGlobalChatChanMember& other) = delete;
+};
+
+#endif // _INC_CGLOBALCHATCHANMEMBER_H
+
+
+
+
+
+================================================
+FILE: src/game/items/CItemCorpse.h
+================================================
+/**
+* @file CItemCorpse.h
+*
+*/
+
+#ifndef _INC_CITEMCORPSE_H
+#define _INC_CITEMCORPSE_H
+
+#include "CItemContainer.h"
+
+
+class CChar;
+
+class CItemCorpse : public CItemContainer
+{
+	// IT_CORPSE
+	// A corpse is a special type of item.
+public:
+	static const char *m_sClassName;
+	CItemCorpse( ITEMID_TYPE id, CItemBase * pItemDef );
+    virtual ~CItemCorpse() override = default;
+
+    CItemCorpse(const CItemCorpse& copy) = delete;
+    CItemCorpse& operator=(const CItemCorpse& other) = delete;
+
+public:
+	bool IsCorpseResurrectable(CChar* pCharHealer, CChar* pCharGhost) const;
+	CChar * IsCorpseSleeping() const;
+    virtual int GetWeight(word amount = 0) const override;
+};
+
+
+#endif // _INC_CITEMCORPSE_H
+
+
+
+================================================
+FILE: src/game/items/CItemMemory.h
+================================================
+/**
+* @file CItemMemory.h
+*
+*/
+
+#ifndef _INC_CITEMMEMORY_H
+#define _INC_CITEMMEMORY_H
+
+#include "CItem.h"
+
+class CItemStone;
+
+
+class CItemMemory : public CItem
+{
+	// IT_EQ_MEMORY
+	// Allow extra tags for the memory
+public:
+	static const char *m_sClassName;
+    CItemMemory(ITEMID_TYPE id, CItemBase * pItemDef);
+	virtual ~CItemMemory() override = default;
+
+	CItemMemory(const CItemMemory& copy) = delete;
+	CItemMemory& operator=(const CItemMemory& other) = delete;
+
+public:
+	word SetMemoryTypes( word wType );
+
+	word GetMemoryTypes() const;
+
+	bool Guild_IsAbbrevOn() const;
+	void Guild_SetAbbrev( bool fAbbrevShow );
+	word Guild_GetVotes() const;
+	void Guild_SetVotes( word wVotes );
+	bool Guild_SetLoyalTo( CUID uid );
+	CUID Guild_GetLoyalTo() const;
+	bool Guild_SetTitle( lpctstr pszTitle );
+	lpctstr Guild_GetTitle() const;
+	CItemStone * Guild_GetLink();
+
+	virtual int FixWeirdness() override;
+};
+
+
+#endif // CITEMMEMORY_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOHuesRec.cpp
+================================================
+#include "CUOHuesRec.h"
+
+byte CUOHuesRec::GetRGB( int rgb ) const
+{
+    short sColor = m_color[31];
+    if ( rgb == 0 ) // R
+        return (byte)(((sColor & 0x7C00) >> 7));
+    else if ( rgb == 1 )
+        return (byte)(((sColor & 0x3E0) >> 2));
+    else if ( rgb == 3 )
+        return (byte)(((sColor & 0x1F) << 3));
+
+    return 0;
+}
+
+
+
+================================================
+FILE: src/game/uo_files/CUOHuesRec.h
+================================================
+/**
+* @file CUOHuesRec.h
+*
+*/
+
+#ifndef _INC_CUOHUESREC_H
+#define _INC_CUOHUESREC_H
+
+#include "../../common/common.h"
+
+// All these structures must be byte packed.
+#ifdef MSVC_COMPILER
+	// Microsoft dependant pragma
+	#pragma pack(1)
+	#define PACK_NEEDED
+#else
+	// GCC based compiler you can add:
+	#define PACK_NEEDED __attribute__ ((packed))
+#endif
+
+
+/**
+* (Hues.mul)
+*/
+struct CUOHuesRec
+{
+    short m_color[34];
+    char m_name[20];
+    byte GetRGB( int rgb ) const;
+} PACK_NEEDED;
+
+
+// Turn off structure packing.
+#ifdef MSVC_COMPILER
+	#pragma pack()
+#else
+	#undef PACK_NEEDED
+#endif
+
+#endif //_INC_CUOHUESREC_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOIndexRec.cpp
+================================================
+#include "CUOIndexRec.h"
+#include "CUOVersionBlock.h"
+
+
+// CUOIndexRec:: Modifiers.
+
+void CUOIndexRec::Init()
+{
+    m_dwLength = 0;
+}
+
+void CUOIndexRec::CopyIndex( const CUOVersionBlock * pVerData )
+{
+    // Get an index rec from the verdata rec.
+    m_dwOffset = pVerData->m_filepos;
+    m_dwLength = pVerData->m_length | 0x80000000;
+    m_wVal3 = pVerData->m_wVal3;
+    m_wVal4 = pVerData->m_wVal4;
+}
+
+void CUOIndexRec::SetupIndex( dword dwOffset, dword dwLength )
+{
+    m_dwOffset = dwOffset;
+    m_dwLength = dwLength;
+}
+
+// CUOIndexRec:: Operations.
+
+dword CUOIndexRec::GetFileOffset() const
+{
+    return ( m_dwOffset );
+}
+
+dword CUOIndexRec::GetBlockLength() const
+{
+    return ( m_dwLength &~ 0x80000000 );
+}
+
+bool CUOIndexRec::IsVerData() const
+{
+    return ( m_dwLength & 0x80000000 ) != 0;
+}
+
+bool CUOIndexRec::HasData() const
+{
+    return ( m_dwOffset != 0xFFFFFFFF && m_dwLength != 0 );
+}
+
+
+
+================================================
+FILE: src/game/uo_files/CUOItemInfo.h
+================================================
+/**
+* @file CUOItemInfo.h
+*
+*/
+
+#ifndef _INC_CUOITEMINFO_H
+#define _INC_CUOITEMINFO_H
+
+
+#include "CUOItemTypeRec.h"
+#include "uofiles_enums_itemid.h"
+
+struct CUOItemInfo : public CUOItemTypeRec_HS
+{
+    explicit CUOItemInfo( ITEMID_TYPE id, bool fNameNotNeeded = false);
+};
+
+
+#endif // _INC_CUOITEMINFO_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOMapBlock.h
+================================================
+/**
+* @file CUOMapBlock.h
+*
+*/
+
+#ifndef _INC_CUOMAPBLOCK_H
+#define _INC_CUOMAPBLOCK_H
+
+#include "CUOMapMeter.h"
+#include "uofiles_macros.h"
+
+// All these structures must be byte packed.
+#ifdef MSVC_COMPILER
+	// Microsoft dependant pragma
+	#pragma pack(1)
+	#define PACK_NEEDED
+#else
+	// GCC based compiler you can add:
+	#define PACK_NEEDED __attribute__ ((packed))
+#endif
+
+
+/**
+* 196 byte block = 8x8 meters, (map0.mul)
+*/
+struct CUOMapBlock
+{
+    word m_wID1;  // ?
+    word m_wID2;
+    CUOMapMeter m_Meter[UO_BLOCK_SIZE * UO_BLOCK_SIZE];
+} PACK_NEEDED;
+
+
+// Turn off structure packing.
+#ifdef MSVC_COMPILER
+	#pragma pack()
+#else
+	#undef PACK_NEEDED
+#endif
+
+#endif //_INC_CUOMAPBLOCK_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOMapMeter.cpp
+================================================
+#include "CUOMapMeter.h"
+
+bool CUOMapMeter::IsTerrainNull( word wTerrainIndex )
+{
+    switch ( wTerrainIndex )
+    {
+        case 0x244: //580
+            return true;
+    }
+    return false;
+}
+
+
+
+================================================
+FILE: src/game/uo_files/CUOMapMeter.h
+================================================
+/**
+* @file CUOMapMeter.h
+*
+*/
+
+#ifndef _INC_CUOMAPMETER_H
+#define _INC_CUOMAPMETER_H
+
+#include "../../common/common.h"
+
+// All these structures must be byte packed.
+#ifdef MSVC_COMPILER
+	// Microsoft dependant pragma
+	#pragma pack(1)
+	#define PACK_NEEDED
+#else
+	// GCC based compiler you can add:
+	#define PACK_NEEDED __attribute__ ((packed))
+#endif
+
+
+/**
+* 3 bytes (map0.mul)
+*/
+struct CUOMapMeter
+{
+    word m_wTerrainIndex;  // TERRAIN_TYPE index to Radarcol and CUOTerrainTypeRec/CUOTerrainTypeRec_HS
+    int8 m_z;
+
+    static bool IsTerrainNull( word wTerrainIndex );
+} PACK_NEEDED;
+
+
+// Turn off structure packing.
+#ifdef MSVC_COMPILER
+	#pragma pack()
+#else
+	#undef PACK_NEEDED
+#endif
+
+#endif //_INC_CUOMAPMETER_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOMobtypes.h
+================================================
+/**
+* @file CUOMobtypes.h
+*
+*/
+
+#ifndef _INC_CUOMOBTYPES_H
+#define _INC_CUOMOBTYPES_H
+
+#include <vector>
+#include "../../common/common.h"
+
+
+/**
+* mobtypes.txt
+*/
+
+enum MOBTYPES_ENTITY_TYPE : ushort
+{
+    MOBTE_MONSTER,
+    MOBTE_SEA_MONSTER,
+    MOBTE_ANIMAL,
+    MOBTE_HUMAN,
+    MOBTE_EQUIPMENT,
+    MOBTE_QTY
+};
+
+struct CUOMobTypesEntry
+{
+    MOBTYPES_ENTITY_TYPE m_uiType;
+    uint m_uiFlags;
+};
+
+
+class CUOMobTypes
+{
+    std::vector<CUOMobTypesEntry> _vMobTypesEntries;
+
+public:
+    void Load();
+
+    bool IsLoaded() const noexcept {
+        return !_vMobTypesEntries.empty();
+    }
+
+    const CUOMobTypesEntry* GetEntry(uint id) const;
+};
+
+
+
+
+
+#endif // _INC_CUOMOBTYPES_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOMultiItemRec.cpp
+================================================
+#include "CUOMultiItemRec.h"
+
+ITEMID_TYPE CUOMultiItemRec::GetDispID() const
+{
+    return (ITEMID_TYPE)(m_wTileID);
+}
+
+ITEMID_TYPE CUOMultiItemRec_HS::GetDispID() const
+{
+	return (ITEMID_TYPE)(m_wTileID);
+}
+
+
+
+================================================
+FILE: src/game/uo_files/CUOStaticItemRec.cpp
+================================================
+#include "CUOStaticItemRec.h"
+
+ITEMID_TYPE CUOStaticItemRec::GetDispID() const
+{
+    return (ITEMID_TYPE)(m_wTileID);
+}
+
+
+
+================================================
+FILE: src/game/uo_files/CUOTerrainInfo.cpp
+================================================
+/**
+* @file CUOTerrainInfo.cpp
+*
+*/
+
+#include "../../common/CUOInstall.h"
+#include "../../common/CLog.h"
+#include "CUOTerrainInfo.h"
+
+CUOTerrainInfo::CUOTerrainInfo( TERRAIN_TYPE id, bool fNameNeeded )
+{
+    if (id >= TERRAIN_QTY)
+    {
+        g_Log.EventError("Trying to read data for a terrain with invalid id 0x%" PRIx16 ".\n", id);
+        return;
+    }
+
+    const CUOTerrainTypeRec_HS* cachedEntry = g_Install.m_tiledata.GetTerrainEntry(id);
+    m_flags = cachedEntry->m_flags;
+    m_unknown = cachedEntry->m_unknown;
+    m_index = cachedEntry->m_index;
+
+    if (fNameNeeded)
+    {
+        // Gotta go fast
+        memcpy(m_name, cachedEntry->m_name, 20);
+        //m_name[19] = '\0';    // This is not necessary because the cached entry already is zero terminated.
+        //Str_CopyLimitNull(m_name, cachedEntry->m_name, ARRAY_COUNT(m_name));
+    }
+    else
+    {
+        m_name[0] = '\0';
+    }
+}
+
+
+
+================================================
+FILE: src/game/uo_files/CUOTerrainInfo.h
+================================================
+/**
+* @file CUOTerrainInfo.h
+*
+*/
+
+#ifndef _INC_CUOTERRAININFO_H
+#define _INC_CUOTERRAININFO_H
+
+#include "CUOTerrainTypeRec.h"
+#include "uofiles_types.h"
+
+
+struct CUOTerrainInfo : public CUOTerrainTypeRec_HS
+{
+    CUOTerrainInfo( TERRAIN_TYPE id, bool fNameNeeded = true );
+};
+
+
+#endif //_INC_CUOTERRAININFO_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOTiledata.h
+================================================
+/**
+* @file CUOTiledata.h
+*
+*/
+
+#ifndef _INC_CUOTILEDATA_H
+#define _INC_CUOTILEDATA_H
+
+#include "CUOItemTypeRec.h"
+#include "CUOTerrainTypeRec.h"
+#include "uofiles_enums_itemid.h"
+#include "uofiles_types.h"
+#include <vector>
+
+class CUOTiledata
+{
+    std::vector<CUOItemTypeRec_HS> _tiledataItemEntries;
+    std::vector<CUOTerrainTypeRec_HS> _tiledataTerrainEntries;
+
+public:
+    void Load();
+    inline uint GetItemMaxIndex() const {
+        ASSERT(!_tiledataItemEntries.empty());
+        return uint(_tiledataItemEntries.size() - 1);
+    }
+    inline const CUOItemTypeRec_HS* GetItemEntry(ITEMID_TYPE id) const {
+        return &(_tiledataItemEntries[id]);
+    }
+    inline const CUOTerrainTypeRec_HS* GetTerrainEntry(TERRAIN_TYPE id) const {
+        return &(_tiledataTerrainEntries[id]);
+    }
+};
+
+
+#endif // _INC_CUOTILEDATA_H
+
+
+
+================================================
+FILE: src/game/uo_files/CUOVersionBlock.cpp
+================================================
+#include "CUOVersionBlock.h"
+
+// CUOVersionBlock:: File ops.
+
+VERFILE_TYPE CUOVersionBlock::GetFileIndex() const
+{
+    return( static_cast<VERFILE_TYPE>(m_file) );
+}
+
+void CUOVersionBlock::SetFile(VERFILE_TYPE dwFile)
+{
+    m_file = dwFile;
+}
+
+// CUOVersionBlock:: Block ops.
+
+dword CUOVersionBlock::GetIndex() const
+{
+    return( VERDATA_MAKE_INDEX( m_file, m_block ));
+}
+
+dword CUOVersionBlock::GetBlockIndex() const
+{
+    return( m_block );
+}
+
+void CUOVersionBlock::SetBlock(dword dwBlock)
+{
+    m_block = dwBlock;
+}
+
+
+
+================================================
+FILE: src/game/uo_files/uofiles_types.h
+================================================
+/**
+* @file uofiles_types.h
+*
+*/
+
+#ifndef _INC_UOFILES_TYPES_H
+#define _INC_UOFILES_TYPES_H
+
+#include "../../common/common.h"
+
+
+typedef word SOUND_TYPE;	// Sound ID
+typedef word MIDI_TYPE;		// Music id
+typedef word MULTI_TYPE;	// define a multi (also defined by ITEMID_MULTI)
+typedef word HUE_TYPE;		// Index into the hues.mul table.
+typedef word TERRAIN_TYPE;
+typedef uchar height_t;
+
+
+#endif //_INC_UOFILES_TYPES_H
+
+
+
+================================================
+FILE: src/network/CClientIterator.h
+================================================
+/**
+* @file CClientIterator.h
+* @brief Works as client iterator getting the clients.
+*/
+
+#ifndef _INC_CCLIENTITERATOR_H
+#define _INC_CCLIENTITERATOR_H
+
+class CClient;
+class CNetworkManager;
+
+class ClientIterator
+{
+protected:
+    const CNetworkManager* m_network;	// network manager to iterate
+    CClient* m_nextClient;
+
+public:
+    explicit ClientIterator(const CNetworkManager* network = nullptr);
+    ~ClientIterator();
+
+    ClientIterator(const ClientIterator& copy) = delete;
+    ClientIterator& operator=(const ClientIterator& other) = delete;
+
+    CClient* next(bool includeClosing = false); // finds next client
+};
+
+
+#endif // _INC_CCLIENTITERATOR_H
+
+
+
+================================================
+FILE: src/network/PingServer.h
+================================================
+/**
+* @file PingServer.h
+*
+*/
+
+#ifndef _INC_PINGSERVER_H
+#define _INC_PINGSERVER_H
+
+#include "../sphere/threads.h"
+#include "CSocket.h"
+
+
+#define PINGSERVER_PORT		12000	// listen on this port for client pings (clients normally uses 12000)
+#define PINGSERVER_BUFFER	64		// number of bytes to receive from clients (client normally sends 40)
+
+
+class PingServer : public AbstractSphereThread
+{
+private:
+	CSocket m_socket;
+
+public:
+	PingServer(void);
+	virtual ~PingServer(void);
+
+    PingServer(const PingServer& copy) = delete;
+    PingServer& operator=(const PingServer& other) = delete;
+
+public:
+	virtual void onStart() override;
+	virtual void tick() override;
+	virtual bool shouldExit() noexcept override;
+	virtual void waitForClose() override;
+};
+
+
+#endif // _INC_PINGSERVER_H
+
+
+
+================================================
+FILE: src/sphere/asyncdb.h
+================================================
+/**
+* @file asyncdb.h
+* @brief Database async queries.
+*/
+
+#ifndef _INC_ASYNCDB_H
+#define _INC_ASYNCDB_H
+
+#include "../common/sphere_library/CSString.h"
+#include "../common/sphere_library/smutex.h"
+#include "threads.h"
+#include <deque>
+
+
+class CDataBaseAsyncHelper : public AbstractSphereThread
+{
+private:
+	typedef std::pair<CSString, CSString> FunctionQueryPair_t;
+	typedef std::pair<bool, FunctionQueryPair_t> QueryBlob_t;
+	typedef std::deque<QueryBlob_t> QueueQuery_t;
+
+private:
+	SimpleMutex m_queryMutex;
+	QueueQuery_t m_queriesTodo;
+
+public:
+	CDataBaseAsyncHelper(void);
+	~CDataBaseAsyncHelper(void);
+private:
+	CDataBaseAsyncHelper(const CDataBaseAsyncHelper& copy);
+	CDataBaseAsyncHelper& operator=(const CDataBaseAsyncHelper& other);
+
+public:
+	virtual void onStart();
+	virtual void tick();
+	virtual void waitForClose();
+
+public:
+	void addQuery(bool isQuery, lpctstr sFunction, lpctstr sQuery);
+};
+
+extern CDataBaseAsyncHelper g_asyncHdb;
+
+
+#endif // _INC_ASYNCDB_H
+
+
+
+================================================
+FILE: src/sphere/ProfileTask.h
+================================================
+/**
+* @file ProfileTask.h
+*
+*/
+
+#ifndef _INC_PROFILETASK_H
+#define _INC_PROFILETASK_H
+
+#include "ProfileData.h"
+
+class AbstractSphereThread;
+
+ProfileData& GetCurrentProfileData();
+
+
+class ProfileTask
+{
+private:
+	AbstractSphereThread* m_context;
+	PROFILE_TYPE m_previousTask;
+
+public:
+    static const char *m_sClassName;
+
+	explicit ProfileTask(PROFILE_TYPE id);
+	~ProfileTask(void) noexcept;
+
+	ProfileTask(const ProfileTask& copy) = delete;
+	ProfileTask& operator=(const ProfileTask& other) = delete;
+};
+
+
+#endif // _INC_PROFILETASK_H
+
+
+
+================================================
+FILE: src/tables/CBaseBaseDef_props.tbl
+================================================
+//
+//	Class:	CBaseBaseDef
+//	Set:	attributes
+//	Prefix:	OBC_
+//
+
+ADD(ABILITYPRIMARY,     	"ABILITYPRIMARY")
+ADD(ABILITYSECONDARY,	"ABILITYSECONDARY")
+ADD(ARMOR,				"ARMOR")
+ADD(BASEID,				"BASEID")
+ADD(CAN,				    "CAN")
+ADD(CATEGORY,			"CATEGORY")
+ADD(DAM,				    "DAM")
+ADD(DEFNAME,				"DEFNAME")
+ADD(DEFNAME2,			"DEFNAME2")
+ADD(DESCRIPTION,		    "DESCRIPTION")
+ADD(EXPANSION,			"EXPANSION")
+ADD(HASCOMPONENTPROPS,	"HASCOMPONENTPROPS")
+ADD(HEIGHT,				"HEIGHT")
+ADD(INSTANCES,			"INSTANCES")
+ADD(ISTEVENT,			"ISTEVENT")
+ADD(NAME,				"NAME")
+ADD(NAMELOC,				"NAMELOC")
+ADD(RESDISPDNHUE,		"RESDISPDNHUE")
+ADD(RESLEVEL,			"RESLEVEL")
+ADD(RESOURCES,			"RESOURCES")
+ADD(SUBSECTION,			"SUBSECTION")
+ADD(TAG,				    "TAG")
+ADD(TAG0,				"TAG0")
+ADD(TEVENTS,				"TEVENTS")
+ADD(VELOCITY,			"VELOCITY")	// TODO: remove?
+
+
+
+================================================
+FILE: src/tables/CCharNpc_props.tbl
+================================================
+//
+//	Class:	CCharNpc
+//	Set:	attributes
+//	Prefix:	CNC_
+//
+	
+ADD(ACTPRI,			"ACTPRI")
+ADD(BONDED,			"BONDED")
+ADD(HOMEDIST,		"HOMEDIST")
+ADD(NEED,			"NEED")
+ADD(NEEDNAME,		"NEEDNAME")
+ADD(NPC,			"NPC")
+ADD(SPEECH,			"SPEECH")
+ADD(SPELLADD,		"SPELLADD")
+ADD(THROWDAM,		"THROWDAM")
+ADD(THROWDAMTYPE,	"THROWDAMTYPE")
+ADD(THROWOBJ,		"THROWOBJ")
+ADD(THROWRANGE,		"THROWRANGE")
+ADD(VENDCAP,		"VENDCAP")
+ADD(VENDGOLD,		"VENDGOLD")
+
+
+
+================================================
+FILE: src/tables/CCharPlayer_functions.tbl
+================================================
+//
+//	Class:	CCharPlayer
+//	Set:	attributes
+//	Prefix:	CPV_
+//
+
+ADD(KICK,			"KICK")
+ADD(PASSWORD,		"PASSWORD")
+ADD(TARGETCLOSE,	"TARGETCLOSE")
+
+
+
+================================================
+FILE: src/tables/CClient_props.tbl
+================================================
+//
+//	Class:	CClient
+//	Set:	attributes
+//	Prefix:	CC_
+//
+
+ADD(ALLMOVE,				"ALLMOVE")
+ADD(ALLSHOW,				"ALLSHOW")
+ADD(CLIENTIS3D,				"CLIENTIS3D")
+ADD(CLIENTISENHANCED,		"CLIENTISENHANCED")
+ADD(CLIENTISKR,				"CLIENTISKR")
+ADD(CLIENTVERSION,			"CLIENTVERSION")
+ADD(DEBUG,					"DEBUG")
+ADD(DETAIL,					"DETAIL")
+ADD(GM,						"GM")
+ADD(HEARALL,				"HEARALL")
+ADD(LASTEVENT,				"LASTEVENT")
+ADD(LASTEVENTWALK,			"LASTEVENTWALK")
+ADD(PRIVSHOW,				"PRIVSHOW")
+ADD(REPORTEDCLIVER,			"REPORTEDCLIVER")
+ADD(SCREENSIZE,				"SCREENSIZE")
+ADD(TARG,					"TARG")
+ADD(TARGP,					"TARGP")
+ADD(TARGPROP,				"TARGPROP")
+ADD(TARGPRV,				"TARGPRV")
+ADD(TARGTXT,				"TARGTXT")
+
+
+
+================================================
+FILE: src/tables/CCPropsItem_props.tbl
+================================================
+//
+//	Class:	CCPropsItem
+//	Set:	attributes
+//	Prefix:	(special) PROPIT_
+//
+
+ADDPROP(LAVAINFUSED,	"LAVAINFUSED",		RDS_HS)
+//rarity, AOS
+ADDPROP(SHIPWRECKITEM,	"SHIPWRECKITEM",	RDS_HS)
+ADDPROP(UNLUCKY,		"UNLUCKY",			RDS_AOS) // have Luck set to negative -100. 
+
+
+
+================================================
+FILE: src/tables/CCPropsItemChar_props.tbl
+================================================
+//
+//	Class:	CCPropsItemChar
+//	Set:	attributes
+//	Prefix:	(special) PROPITCH_
+//
+
+ADDPROP(WEIGHTREDUCTION,	"WEIGHTREDUCTION",	RDS_AOS) //FIXME: expansion?
+
+
+
+================================================
+FILE: src/tables/CCPropsItemWeapon_props.tbl
+================================================
+//
+//	Class:	CCPropsItemWeapon
+//	Set:	attributes
+//	Prefix:	(special) PROPIWEAP_
+//
+
+ADDPROP(ASSASSINHONED,		"ASSASSINHONED",		RDS_TOL)
+ADDPROP(BALANCED,			"BALANCED",				RDS_ML)
+ADDPROP(BANE,				"BANE",					RDS_TOL)
+ADDPROP(BATTLELUST,			"BATTLELUST",			RDS_SA)
+ADDPROP(BONEBREAKER,		"BONEBREAKER",			RDS_TOL)
+ADDPROP(BLOODDRINKER,		"BLOODDRINKER",			RDS_AOS)
+ADDPROP(MAGEWEAPON,			"MAGEWEAPON",			RDS_AOS)
+ADDPROP(MYSTICWEAPON,		"MYSTICWEAPON",			RDS_AOS) // list.ADDPROP(1155881, (30 - prop).ToString());   // mystic weapon -~1_val~ skill
+ADDPROP(RANGE,				"RANGE",				RDS_PRET2A)
+ADDPROP(RANGEH,				"RANGEH",				RDS_PRET2A)
+ADDPROP(RANGEL,				"RANGEL",				RDS_PRET2A)
+ADDPROP(SEARINGWEAPON,		"SEARING",				RDS_SA)
+ADDPROP(SPLINTERINGWEAPON,	"SPLINTERING",			RDS_SA)
+ADDPROP(USEBESTWEAPONSKILL, "USEBESTWEAPONSKILL",	RDS_AOS)
+ADDPROP(WEAPONSOUNDHIT,		"WEAPONSOUNDHIT",		RDS_PRET2A)
+ADDPROP(WEAPONSOUNDMISS,	"WEAPONSOUNDMISS",	RDS_PRET2A)
+
+
+================================================
+FILE: src/tables/CCPropsItemWeaponRanged_props.tbl
+================================================
+//
+//	Class:	CCPropsItemWeaponRanged
+//	Set:	attributes
+//	Prefix:	(special) PROPIWEAPRNG_
+//
+
+ADDPROP(AMMOANIM,			"AMMOANIM",			RDS_PRET2A)
+ADDPROP(AMMOANIMHUE,		"AMMOANIMHUE",		RDS_PRET2A)
+ADDPROP(AMMOANIMRENDER,		"AMMOANIMRENDER",	RDS_PRET2A)
+ADDPROP(AMMOCONT,			"AMMOCONT",			RDS_PRET2A)
+ADDPROP(AMMOSOUNDHIT,		"AMMOSOUNDHIT",		RDS_PRET2A)
+ADDPROP(AMMOSOUNDMISS,		"AMMOSOUNDMISS",	RDS_PRET2A)
+ADDPROP(AMMOTYPE,			"AMMOTYPE",			RDS_PRET2A)
+
+
+
+================================================
+FILE: src/tables/CItem_functions.tbl
+================================================
+//
+//	Class:	CItem
+//	Set:	functions
+//	Prefix:	CIV_
+//
+
+ADD(BOUNCE,			"BOUNCE")
+ADD(CARVECORPSE,	"CARVECORPSE")
+ADD(CONSUME,		"CONSUME")
+ADD(CONTCONSUME,	"CONTCONSUME")
+ADD(DECAY,			"DECAY")
+ADD(DESTROY,		"DESTROY")
+ADD(DROP,			"DROP")
+ADD(DUPE,			"DUPE")
+ADD(EQUIP,			"EQUIP")
+ADD(REPAIR,			"REPAIR")
+ADD(SMELT,			"SMELT")
+ADD(UNEQUIP,		"UNEQUIP")
+ADD(USE,			"USE")
+ADD(USEDOOR,		"USEDOOR")
+
+
+
+================================================
+FILE: src/tables/CItemStone_functions.tbl
+================================================
+//
+//	Class:	CItemStone
+//	Set:	functions
+//	Prefix:	ISV_
+//
+
+ADD(ACCEPTCANDIDATE,"ACCEPTCANDIDATE")
+ADD(ALLGUILDS,"ALLGUILDS")
+ADD(ALLMEMBERS,"ALLMEMBERS")
+ADD(APPLYTOJOIN,"APPLYTOJOIN")
+ADD(CHANGEALIGN,"CHANGEALIGN")
+ADD(DECLAREFEALTY,"DECLAREFEALTY")
+ADD(DECLAREPEACE,"DECLAREPEACE")
+ADD(DECLAREWAR,"DECLAREWAR")
+ADD(DELHOUSE,"DELHOUSE")
+ADD(DELSHIP,"DELSHIP")
+ADD(DISMISSMEMBER,"DISMISSMEMBER")
+ADD(ELECTMASTER,"ELECTMASTER")
+ADD(GRANTTITLE,"GRANTTITLE")
+ADD(INVITEWAR,"INVITEWAR")
+ADD(JOINASMEMBER,"JOINASMEMBER")
+ADD(MASTERMENU,"MASTERMENU")
+ADD(RECRUIT,"RECRUIT")
+ADD(REFUSECANDIDATE,"REFUSECANDIDATE")
+ADD(RESIGN,"RESIGN")
+ADD(RETURNMAINMENU,"RETURNMAINMENU")
+ADD(SETABBREVIATION,"SETABBREVIATION")
+ADD(SETCHARTER,"SETCHARTER")
+ADD(SETGMTITLE,"SETGMTITLE")
+ADD(SETNAME,"SETNAME")
+ADD(TOGGLEABBREVIATION,"TOGGLEABBREVIATION")
+ADD(VIEWCANDIDATES,"VIEWCANDIDATES")
+ADD(VIEWCHARTER,"VIEWCHARTER")
+ADD(VIEWENEMYS,"VIEWENEMYS")
+ADD(VIEWROSTER,"VIEWROSTER")
+ADD(VIEWTHREATS,"VIEWTHREATS")
+
+
+
+================================================
+FILE: src/tables/CItemStone_props.tbl
+================================================
+//
+//	Class:	CItemStone
+//	Set:	props
+//	Prefix:	STC_
+//
+
+ADD(ABBREV,				"ABBREV")
+ADD(ABBREVIATIONTOGGLE,	"ABBREVIATIONTOGGLE")
+ADD(ADDHOUSE,           "ADDHOUSE")
+ADD(ADDSHIP,            "ADDSHIP")
+ADD(ALIGN,				"ALIGN")
+ADD(ALIGNTYPE,			"ALIGNTYPE")
+ADD(CHARTER,			"CHARTER")
+ADD(HOUSES,             "HOUSES")
+ADD(LOYALTO,			"LOYALTO")
+ADD(MASTER,				"MASTER")
+ADD(MASTERGENDERTITLE,	"MASTERGENDERTITLE")
+ADD(MASTERTITLE,		"MASTERTITLE")
+ADD(MASTERUID,			"MASTERUID")
+ADD(MAXHOUSES,          "MAXHOUSES")
+ADD(MAXSHIPS,           "MAXSHIPS")
+ADD(MEMBER,				"MEMBER")
+ADD(SHIPS,              "SHIPS")
+ADD(WEBPAGE,			"WEBPAGE")
+
+
+
+================================================
+FILE: src/tables/CParty_functions.tbl
+================================================
+//
+//	Class:	CParrtyDef
+//	Set:	functions
+//	Prefix:	PDV_
+//	
+	
+ADD(ADDMEMBER,		"ADDMEMBER")
+ADD(ADDMEMBERFORCED,"ADDMEMBERFORCED")
+ADD(CLEARTAGS,		"CLEARTAGS")
+ADD(CREATE,			"CREATE")
+ADD(DISBAND,		"DISBAND")
+ADD(MESSAGE,		"MESSAGE")
+ADD(REMOVEMEMBER,	"REMOVEMEMBER")
+ADD(SETMASTER,		"SETMASTER")
+ADD(SYSMESSAGE,		"SYSMESSAGE")
+ADD(TAGLIST,		"TAGLIST")
+
+
+
+================================================
+FILE: src/tables/CParty_props.tbl
+================================================
+//
+//	Class:	CPartyDef
+//	Set:	attributes
+//	Prefix:	PDC_
+//
+
+ADD(ISSAMEPARTYOF,	"ISSAMEPARTYOF")
+ADD(MEMBERS,		"MEMBERS")
+ADD(SPEECHFILTER,	"SPEECHFILTER")
+ADD(TAG,			"TAG")
+ADD(TAG0,			"TAG0")
+ADD(TAGAT,			"TAGAT")
+ADD(TAGCOUNT,		"TAGCOUNT")
+
+
+
+================================================
+FILE: src/tables/CSector_functions.tbl
+================================================
+//
+//	Class:	CSector
+//	Set:	functions
+//	Prefix:	SEV_
+//
+
+ADD(ALLCHARS,		"ALLCHARS")
+ADD(ALLCHARSIDLE,	"ALLCHARSIDLE")
+ADD(ALLCLIENTS,		"ALLCLIENTS")
+ADD(ALLITEMS,		"ALLITEMS")
+ADD(AWAKE,          "AWAKE")
+ADD(DRY,			"DRY")
+ADD(LIGHT,			"LIGHT")
+ADD(RAIN,			"RAIN")
+ADD(RESPAWN,		"RESPAWN")
+ADD(RESTOCK,		"RESTOCK")
+ADD(SEASON,			"SEASON")
+ADD(SLEEP,          "SLEEP")
+ADD(SNOW,			"SNOW")
+
+
+
+================================================
+FILE: src/tables/CSFileObj_functions.tbl
+================================================
+//
+//	Class:	CSFileObj
+//	Set:	functions
+//	Prefix:	FOV_
+//
+
+ADD(CLOSE,		"CLOSE")
+ADD(DELETEFILE,	"DELETEFILE")
+ADD(FLUSH,		"FLUSH")
+
+
+
+================================================
+FILE: src/tables/CSFileObj_props.tbl
+================================================
+//
+//	Class:	CSFileObj
+//	Set:	attributes
+//	Prefix:	FO_
+//
+
+ADD(FILEEXIST,		"FILEEXIST")
+ADD(FILELINES,		"FILELINES")
+ADD(FILEPATH,		"FILEPATH")
+ADD(INUSE,			"INUSE")
+ADD(ISEOF,			"ISEOF")
+ADD(LENGTH,			"LENGTH")
+ADD(OPEN,			"OPEN")
+ADD(POSITION,		"POSITION")
+ADD(READBYTE,		"READBYTE")
+ADD(READCHAR,		"READCHAR")
+ADD(READLINE,		"READLINE")
+ADD(SEEK,			"SEEK")
+ADD(WRITE,			"WRITE")
+ADD(WRITECHR,		"WRITECHR")
+ADD(WRITELINE,		"WRITELINE")
+
+
+
+================================================
+FILE: src/tables/CSFileObjContainer_functions.tbl
+================================================
+//
+//	Class:	CSFileObjContainer
+//	Set:	functions
+//	Prefix:	CFOV_
+//
+
+ADD(CLOSEOBJECT,	"CLOSEOBJECT")
+ADD(RESETOBJECT,	"RESETOBJECT")
+
+
+
+================================================
+FILE: src/tables/CSFileObjContainer_props.tbl
+================================================
+//
+//	Class:	CSFileObjContainer
+//	Set:	attributes
+//	Prefix:	CFO_
+//
+
+ADD(GLOBALTIMEOUT,	"GLOBALTIMEOUT")
+ADD(OBJECTPOOL,		"OBJECTPOOL")
+
+
+
+================================================
+FILE: src/tables/CStoneMember_functions.tbl
+================================================
+//
+//	Class:	CStoneMember
+//	Set:	functions
+//	Prefix:	STMMV_
+//
+
+
+
+================================================
+FILE: src/tables/CStoneMember_props.tbl
+================================================
+//
+//	Class:	CStoneMember
+//	Set:	attributes
+//	Prefix:	STMM_
+//
+
+ADD(ACCOUNTGOLD,		"ACCOUNTGOLD")
+ADD(TITLE,				"GUILDTITLE")
+ADD(GUILD_ISALLY,		"ISALLY")		// Guild only
+ADD(ISCANDIDATE,		"ISCANDIDATE")
+ADD(GUILD_ISENEMY,		"ISENEMY")		// Guild only
+ADD(ISMASTER,			"ISMASTER")
+ADD(ISMEMBER,			"ISMEMBER")
+ADD(LOYALTO,			"LOYALTO")
+ADD(PRIV,				"PRIV")
+ADD(PRIVNAME,			"PRIVNAME")
+ADD(SHOWABBREV,			"SHOWABBREV")
+ADD(GUILD_THEYALLIANCE,	"THEYALLIANCE")	// Guild only
+ADD(GUILD_THEYWAR,		"THEYWAR")		// Guild only
+ADD(GUILD_WEALLIANCE,	"WEALLIANCE")	// Guild only
+ADD(GUILD_WEWAR,		"WEWAR")		// Guild only
+
+
+
+
+================================================
+FILE: tests/coverity_model.cpp
+================================================
+// Avoid false-positive issues by giving an alternative definition of Assert_Fail, used by ASSERT and PERSISTANT_ASSERT.
+void Assert_Fail(const char *, const char *, long long)
+{
+	__coverity_panic__();
+}
+
+
+================================================
+FILE: utilities/configure_asan.bat
+================================================
+@echo off
+REM SET ASAN_SYMBOLIZER_PATH="C:\Program Files\LLVM\bin\llvm-symbolizer.exe"
+REM ASAN_MORE=check_initialization_order=1:
+@echo on
+
+SET _SAN_COMMON_FLAGS=symbolize=1:handle_abort=true:abort_on_error=false
+SET ASAN_OPTIONS=%_SAN_COMMON_FLAGS%:strict_init_order=true:detect_stack_use_after_return=true
+SET ASAN_OPTIONS=%ASAN_OPTIONS%:sleep_before_dying=3:print_stats=true:stack_trace_format="[frame=%%n, function=%%f, location=%%S]"
+SET LSAN_OPTIONS=%_SAN_COMMON_FLAGS%
+SET MSAN_OPTIONS=%_SAN_COMMON_FLAGS%
+SET TSAN_OPTIONS=%_SAN_COMMON_FLAGS%
+SET UBSAN_OPTIONS="${_SAN_COMMON_FLAGS}:print_stacktrack=true"
+SET ASAN_SYMBOLIZER_PATH="C:\LLVM\bin\llvm-symbolizer.exe"
+
+
+
+================================================
+FILE: utilities/configure_asan.sh
+================================================
+#!/bin/sh
+
+_SAN_COMMON_FLAGS=handle_abort=true:abort_on_error=false
+#ASAN_MORE=check_initialization_order=1
+export ASAN_OPTIONS="${_SAN_COMMON_FLAGS}"
+export ASAN_OPTIONS="${ASAN_OPTIONS}:strict_init_order=true:detect_stack_use_after_return=true"
+export ASAN_OPTIONS="${ASAN_OPTIONS}:sleep_before_dying=3:print_stats=true:stack_trace_format=\"[frame=%n, function=%f, location=%S]\""
+export LSAN_OPTIONS="${_SAN_COMMON_FLAGS}"
+export MSAN_OPTIONS="${_SAN_COMMON_FLAGS}"
+export TSAN_OPTIONS="${_SAN_COMMON_FLAGS}"
+export UBSAN_OPTIONS="${_SAN_COMMON_FLAGS}:print_stacktrack=true"
+
+export ASAN_SYMBOLIZER_PATH='/usr/bin/addr2line'
+
+
+
+================================================
+FILE: .github/codeql/codeql-config.yml
+================================================
+query-filters:
+  - exclude:
+      id: cpp/non-constant-format
+  - exclude:
+      id: cpp/commented-out-code
+  - exclude:
+      id: cpp/trivial-switch
+  - exclude:
+      id: cpp/include-non-header
+  - exclude:
+      id: cpp/complex-block
+  - exclude:
+      id: cpp/long-switch
+  - exclude:
+      id: cpp/use-of-goto
+
+
+
+
+================================================
+FILE: .github/workflows/build_aux_files.yml
+================================================
+name: Create/upload auxiliary files to the release.
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'main'
+      - 'dev'
+    paths-ignore:
+      - '*.txt'
+      - '*.md'
+
+jobs:
+  upload_github_release:
+    # Upload artifact linked to GitHub RELEASE we are creating - only if the run is for a pull request, or for selected branches
+    #if: contains(fromJson('["master", "main"]'), github.ref_name)
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        run: git log --pretty=format:"%ad %an %s" --date=short > Git-Changelog.txt
+
+      - name: Add auxiliary files to the release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Nightly
+          tag_name: Nightly
+          prerelease: true
+          files: Git-Changelog.txt
+
+

@@ -76,7 +76,12 @@ function activate(context) {
             updateDiagnostics(document);
         }
     };
-    context.subscriptions.push(vscode.workspace.onDidOpenTextDocument(updateDiagnosticsTrigger));
+    context.subscriptions.push(vscode.workspace.onDidOpenTextDocument(document => {
+        // Ajout d'un délai pour éviter les conflits de rafraîchissement de l'interface.
+        setTimeout(() => {
+            updateDiagnosticsTrigger(document);
+        }, 100);
+    }));
     // Utilise un debounce pour onDidChangeTextDocument afin d'éviter les appels trop fréquents
     context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(event => {
         if (debounceTimer) {
@@ -127,6 +132,8 @@ async function scanAllWorkspaceForDiagnostics(context) {
                 validateSymbols(document, fileDiagnostics);
                 (0, structureValidator_1.validateCodeStructure)(document, fileDiagnostics);
                 validateWithRegexRules(document, fileDiagnostics);
+                validateSectionDefnames(document, fileDiagnostics);
+                validateBrackets(document, fileDiagnostics);
                 diagnosticCollection.set(document.uri, fileDiagnostics);
             }
             catch (error) {
@@ -147,6 +154,8 @@ function updateDiagnostics(document) {
     validateSymbols(document, diagnostics);
     (0, structureValidator_1.validateCodeStructure)(document, diagnostics);
     validateWithRegexRules(document, diagnostics);
+    validateSectionDefnames(document, diagnostics);
+    validateBrackets(document, diagnostics);
     diagnosticCollection.set(document.uri, diagnostics);
 }
 function levenshteinDistance(str1, str2) {
@@ -174,6 +183,25 @@ function validateSymbols(document, diagnostics) {
     const lineCount = document.lineCount;
     for (let lineIndex = 0; lineIndex < lineCount; lineIndex++) {
         const line = document.lineAt(lineIndex);
+        // Règle : Vérifier les espaces avant les déclarations de section comme [ITEMDEF]
+        const leadingWhitespaceMatch = line.text.match(/^(\s+)\[/);
+        if (leadingWhitespaceMatch) {
+            const range = new vscode.Range(lineIndex, 0, lineIndex, leadingWhitespaceMatch[1].length);
+            const diagnostic = new vscode.Diagnostic(range, 'Les déclarations de section (ex: [ITEMDEF]) ne doivent pas être précédées par des espaces ou des tabulations.', vscode.DiagnosticSeverity.Warning);
+            diagnostic.source = 'Sphere Script Linter';
+            diagnostic.code = 'leading-whitespace-section';
+            diagnostics.push(diagnostic);
+        }
+        // Règle : Vérifier les espaces après le crochet d'ouverture '['
+        const insideWhitespaceMatch = line.text.match(/^\s*\[(\s+)/);
+        if (insideWhitespaceMatch) {
+            const trimmedText = line.text.trim();
+            const range = new vscode.Range(lineIndex, line.text.indexOf('[') + 1, lineIndex, line.text.indexOf('[') + 1 + insideWhitespaceMatch[1].length);
+            const diagnostic = new vscode.Diagnostic(range, 'Aucun espace n\'est autorisé entre le crochet  et le mot-clé de la section.', vscode.DiagnosticSeverity.Warning);
+            diagnostic.source = 'Sphere Script Linter';
+            diagnostic.code = 'inner-whitespace-section';
+            diagnostics.push(diagnostic);
+        }
         const text = line.text.trim();
         if (text.length === 0 || text.startsWith('//'))
             continue;
@@ -300,6 +328,181 @@ function validateWithRegexRules(document, diagnostics) {
             diagnostics.push(diagnostic);
         }
     });
+}
+function validateSectionDefnames(document, diagnostics) {
+    let currentSection = null;
+    for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
+        const line = document.lineAt(lineIndex);
+        const text = line.text.trim();
+        if (text.length === 0 || text.startsWith('//')) {
+            continue;
+        }
+        const sectionMatch = text.match(/^\s*\[(ITEMDEF|CHARDEF)\s+([a-zA-Z_][a-zA-Z0-9_]*)/i);
+        if (sectionMatch) {
+            currentSection = { name: sectionMatch[2], line: lineIndex };
+            continue;
+        }
+        if (text.startsWith('[')) {
+            currentSection = null;
+        }
+        if (currentSection) {
+            const defnameMatch = text.match(/^DEFNAME\s*=\s*(.*)/i);
+            if (defnameMatch) {
+                const defnameValue = defnameMatch[1].trim();
+                if (defnameValue.toLowerCase() !== currentSection.name.toLowerCase()) {
+                    const valueStartIndex = line.text.toUpperCase().indexOf(defnameValue.toUpperCase());
+                    const range = new vscode.Range(lineIndex, valueStartIndex, lineIndex, valueStartIndex + defnameValue.length);
+                    const diagnostic = new vscode.Diagnostic(range, `Le DEFNAME \"${defnameValue}\" ne correspond pas à la définition de la section \"${currentSection.name}\".`, vscode.DiagnosticSeverity.Error);
+                    diagnostic.source = 'Sphere Script Linter';
+                    diagnostic.code = 'defname-mismatch';
+                    diagnostics.push(diagnostic);
+                }
+                currentSection = null;
+            }
+        }
+    }
+}
+/**
+ * Validates that all brackets like <> and () are properly matched and closed, using a tokenizer.
+ * @param document The document to validate.
+ * @param diagnostics The collection of diagnostics to add to.
+ */
+function validateBrackets(document, diagnostics) {
+    // Valider ligne par ligne au lieu de tout le document
+    for (let lineIndex = 0; lineIndex < document.lineCount; lineIndex++) {
+        const line = document.lineAt(lineIndex);
+        const lineText = line.text;
+        // Ignorer les commentaires et lignes vides
+        if (lineText.trim().startsWith('//') || lineText.trim().length === 0) {
+            continue;
+        }
+        const parenStack = [];
+        const angleStack = [];
+        const tokens = Array.from(tokenize(lineText));
+        for (let i = 0; i < tokens.length; i++) {
+            const token = tokens[i];
+            switch (token.type) {
+                case 'PAREN_OPEN':
+                    parenStack.push(token.index);
+                    break;
+                case 'PAREN_CLOSE':
+                    if (parenStack.length > 0) {
+                        parenStack.pop();
+                    }
+                    else {
+                        const pos = new vscode.Position(lineIndex, token.index);
+                        diagnostics.push(new vscode.Diagnostic(new vscode.Range(pos, pos.translate(0, 1)), 'Parenthèse fermante `)` inattendue.', vscode.DiagnosticSeverity.Error));
+                    }
+                    break;
+                case 'LT': {
+                    const prevToken = i > 0 ? tokens[i - 1] : null;
+                    if (!prevToken || ['OPERATOR', 'OPERATOR_COMPARE', 'PAREN_OPEN', 'COMMA'].includes(prevToken.type)) {
+                        angleStack.push(token.index);
+                    }
+                    break;
+                }
+                case 'GT':
+                    if (angleStack.length > 0) {
+                        angleStack.pop();
+                    }
+                    break;
+            }
+        }
+        // Vérifier les brackets non fermés sur cette ligne
+        angleStack.forEach(index => {
+            const pos = new vscode.Position(lineIndex, index);
+            diagnostics.push(new vscode.Diagnostic(new vscode.Range(pos, pos.translate(0, 1)), 'Chevron ouvrant `<` non fermé.', vscode.DiagnosticSeverity.Error));
+        });
+        parenStack.forEach(index => {
+            const pos = new vscode.Position(lineIndex, index);
+            diagnostics.push(new vscode.Diagnostic(new vscode.Range(pos, pos.translate(0, 1)), 'Parenthèse ouvrante `(` non fermée.', vscode.DiagnosticSeverity.Error));
+        });
+    }
+}
+function* tokenize(text) {
+    const tokenDefinitions = [
+        { type: 'COMMENT', regex: /^\/\/.*/ },
+        { type: 'STRING', regex: /^"[^"]*"/ },
+        { type: 'OPERATOR_COMPARE', regex: /^>>|^<<|^>=|^<=|^==|^!=/ },
+        { type: 'KEYWORD', regex: /^\b(if|elif|elseif|else|endif|return|while|for|serv|src|new|argo|args|argn|argn1|i|def|local|argv|ref1|ref2|act|function|rand|magicresistance|healing|npc)\b/i },
+        { type: 'PAREN_OPEN', regex: /^\(/ },
+        { type: 'PAREN_CLOSE', regex: /^\)/ },
+        { type: 'BRACKET_OPEN', regex: /^\[/ },
+        { type: 'BRACKET_CLOSE', regex: /^\]/ },
+        { type: 'OPERATOR_SINGLE', regex: /^<|^>/ },
+        { type: 'OPERATOR', regex: /^[&|^~=!+\-\*\/%?:]/ },
+        { type: 'IDENTIFIER', regex: /^[a-zA-Z_][a-zA-Z0-9_.]*/ },
+        { type: 'NUMBER', regex: /^0x[0-9a-fA-F]+|^\d+(\.\d+)?/ },
+        { type: 'COMMA', regex: /^,/ },
+        { type: 'WHITESPACE', regex: /^\s+/ },
+        { type: 'UNKNOWN', regex: /^./ },
+    ];
+    let currentIndex = 0;
+    let remainingText = text;
+    while (remainingText.length > 0) {
+        let matched = false;
+        // Gestion spéciale pour VARIABLE_ACCESS
+        if (remainingText[0] === '<') {
+            let depth = 1;
+            let i = 1;
+            while (i < remainingText.length && depth > 0) {
+                if (remainingText[i] === '<') {
+                    depth++;
+                }
+                else if (remainingText[i] === '>') {
+                    depth--;
+                }
+                i++;
+            }
+            // Si on a trouvé le > fermant ET que c'est un VARIABLE_ACCESS valide
+            if (depth === 0 && i > 1) {
+                const value = remainingText.substring(0, i);
+                const content = value.substring(1, value.length - 1).trim();
+                // Si ça ressemble à une variable
+                if (content.length > 0 && (/[a-zA-Z_]/.test(content) || content.includes('.') || content.includes(','))) {
+                    yield {
+                        type: 'VARIABLE_ACCESS',
+                        value: value,
+                        index: currentIndex
+                    };
+                    currentIndex += value.length;
+                    remainingText = remainingText.substring(value.length);
+                    matched = true;
+                    continue;
+                }
+            }
+            // IMPORTANT : Si ce n'est pas un VARIABLE_ACCESS valide,
+            // on laisse les règles normales gérer le < comme OPERATOR_SINGLE
+        }
+        // Logique normale pour les autres tokens
+        for (const def of tokenDefinitions) {
+            const match = remainingText.match(def.regex);
+            if (match) {
+                const value = match[0];
+                if (def.type !== 'WHITESPACE') {
+                    yield {
+                        type: def.type,
+                        value: value,
+                        index: currentIndex
+                    };
+                }
+                currentIndex += value.length;
+                remainingText = remainingText.substring(value.length);
+                matched = true;
+                break;
+            }
+        }
+        if (!matched) {
+            // Fallback : consommer 1 caractère pour éviter la boucle infinie
+            yield {
+                type: 'UNKNOWN',
+                value: remainingText[0],
+                index: currentIndex
+            };
+            currentIndex++;
+            remainingText = remainingText.substring(1);
+        }
+    }
 }
 function deactivate() {
     console.log('L\'extension SphereScript est désactivée.');

@@ -37,7 +37,7 @@ export class SphereScriptHoverProvider implements vscode.HoverProvider {
                             .toUpperCase()
                             .replace(/ /g, '_')
                             .replace(/\(|\)/g, '');
-            description = autocompleteData.trigger_descriptions[lookupKey];
+            description = (autocompleteData.trigger_descriptions as {[key: string]: string})[lookupKey];
             if (description) {
                 console.log(`[SphereScriptHoverProvider] Found trigger description for: ${lookupKey}`);
                 return new vscode.Hover(
@@ -53,7 +53,7 @@ export class SphereScriptHoverProvider implements vscode.HoverProvider {
             const objectPrefix = objectPropertyMatch[1].toUpperCase();
             const propertyName = objectPropertyMatch[2].toUpperCase();
             
-            description = autocompleteData.property_descriptions[propertyName];
+            description = (autocompleteData.property_descriptions as {[key: string]: string})[propertyName];
             if (description) {
                 console.log(`[SphereScriptHoverProvider] Found property description for: ${objectPrefix}.${propertyName}`);
                 return new vscode.Hover(
@@ -65,7 +65,7 @@ export class SphereScriptHoverProvider implements vscode.HoverProvider {
 
         // 3. Vérifie si c'est un mot-clé de section (ex: ITEMDEF, FUNCTION)
         lookupKey = word.toUpperCase();
-        description = autocompleteData.section_keywords_descriptions[lookupKey];
+        description = (autocompleteData.section_keywords_descriptions as {[key: string]: string})[lookupKey];
         if (description) {
             console.log(`[SphereScriptHoverProvider] Found section keyword description for: ${lookupKey}`);
             return new vscode.Hover(
@@ -75,7 +75,7 @@ export class SphereScriptHoverProvider implements vscode.HoverProvider {
         }
 
         // 4. Vérifie si c'est une propriété générale (ex: ID, TAG, MORE)
-        description = autocompleteData.property_descriptions[lookupKey];
+        description = (autocompleteData.property_descriptions as {[key: string]: string})[lookupKey];
         if (description) {
             console.log(`[SphereScriptHoverProvider] Found property description for: ${lookupKey}`);
             return new vscode.Hover(

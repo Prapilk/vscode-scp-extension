@@ -114,6 +114,46 @@ export class SphereScriptCompletionItemProvider implements vscode.CompletionItem
             return new vscode.CompletionList(completionItems, true);
         }
 
+        // Gère les symboles généraux (propriétés, fonctions, etc.) comme fallback
+        const generalWordMatch = textBeforeCursor.match(/([a-zA-Z_][a-zA-Z0-9_]*)$/);
+        if (generalWordMatch) {
+            const partialWord = generalWordMatch[1].toUpperCase();
+            
+            // Crée une liste complète de tous les symboles pour la suggestion globale
+            const allSymbols = [
+                ...autocompleteData.item_properties,
+                ...autocompleteData.char_properties,
+                ...autocompleteData.serv_properties,
+                ...autocompleteData.triggers,
+                ...autocompleteData.section_keywords,
+                ...autocompleteData.statements
+            ];
+            const uniqueSymbols = [...new Set(allSymbols)];
+
+            const filteredSymbols = uniqueSymbols.filter((s: string) => s.toUpperCase().startsWith(partialWord));
+
+            const replacementStartChar = position.character - partialWord.length;
+            const replacementRange = createReplacementRange(replacementStartChar);
+
+            const completionItems = filteredSymbols.map((s: string) => {
+                let kind = vscode.CompletionItemKind.Text;
+                if (autocompleteData.item_properties.includes(s) || autocompleteData.char_properties.includes(s) || autocompleteData.serv_properties.includes(s)) {
+                    kind = vscode.CompletionItemKind.Property;
+                } else if (autocompleteData.triggers.includes(s)) {
+                    kind = vscode.CompletionItemKind.Event;
+                } else if (autocompleteData.section_keywords.includes(s) || autocompleteData.statements.includes(s)) {
+                    kind = vscode.CompletionItemKind.Keyword;
+                }
+
+                const item = new vscode.CompletionItem(s, kind);
+                item.insertText = s;
+                item.range = replacementRange;
+                return item;
+            });
+
+            return new vscode.CompletionList(completionItems, false);
+        }
+
         return undefined;
     }
 }

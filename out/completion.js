@@ -132,6 +132,41 @@ class SphereScriptCompletionItemProvider {
             });
             return new vscode.CompletionList(completionItems, true);
         }
+        // Gère les symboles généraux (propriétés, fonctions, etc.) comme fallback
+        const generalWordMatch = textBeforeCursor.match(/([a-zA-Z_][a-zA-Z0-9_]*)$/);
+        if (generalWordMatch) {
+            const partialWord = generalWordMatch[1].toUpperCase();
+            // Crée une liste complète de tous les symboles pour la suggestion globale
+            const allSymbols = [
+                ...autocompleteData_1.autocompleteData.item_properties,
+                ...autocompleteData_1.autocompleteData.char_properties,
+                ...autocompleteData_1.autocompleteData.serv_properties,
+                ...autocompleteData_1.autocompleteData.triggers,
+                ...autocompleteData_1.autocompleteData.section_keywords,
+                ...autocompleteData_1.autocompleteData.statements
+            ];
+            const uniqueSymbols = [...new Set(allSymbols)];
+            const filteredSymbols = uniqueSymbols.filter((s) => s.toUpperCase().startsWith(partialWord));
+            const replacementStartChar = position.character - partialWord.length;
+            const replacementRange = createReplacementRange(replacementStartChar);
+            const completionItems = filteredSymbols.map((s) => {
+                let kind = vscode.CompletionItemKind.Text;
+                if (autocompleteData_1.autocompleteData.item_properties.includes(s) || autocompleteData_1.autocompleteData.char_properties.includes(s) || autocompleteData_1.autocompleteData.serv_properties.includes(s)) {
+                    kind = vscode.CompletionItemKind.Property;
+                }
+                else if (autocompleteData_1.autocompleteData.triggers.includes(s)) {
+                    kind = vscode.CompletionItemKind.Event;
+                }
+                else if (autocompleteData_1.autocompleteData.section_keywords.includes(s) || autocompleteData_1.autocompleteData.statements.includes(s)) {
+                    kind = vscode.CompletionItemKind.Keyword;
+                }
+                const item = new vscode.CompletionItem(s, kind);
+                item.insertText = s;
+                item.range = replacementRange;
+                return item;
+            });
+            return new vscode.CompletionList(completionItems, false);
+        }
         return undefined;
     }
 }
